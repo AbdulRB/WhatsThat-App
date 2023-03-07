@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import * as EmailValidator from 'email-validator';
 
@@ -15,10 +16,10 @@ export default class LoginScreen extends Component {
             submitted: false
         }
 
-        this._onPressButton = this._onPressButton.bind(this)
+        this._login = this._login.bind(this)
     }
 
-    _onPressButton(){
+    _login = async () => {
         this.setState({submitted: true})
         this.setState({error: ""})
 
@@ -38,10 +39,46 @@ export default class LoginScreen extends Component {
             return;
         }
 
+        let to_send = {
+            email: this.state.email,
+            password: this.state.password,
+        }
 
-        console.log("Button clicked: " + this.state.email + " " + this.state.password)
-        console.log("Validated and ready to send to the API")
+        return fetch("http://localhost:3333/api/1.0.0/login", {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(to_send)
+        })
+        .then((response) => {
+            if(response.status === 200){
+                return response.json()
+            }
+            else if(response.status === 400){
+                throw 'Invalid email or password';
+            }
+            else{
+                throw 'Something went wrong';
+            }
+        })
+        .then(async (responseJson) => {
+            console.log(responseJson)
+            await AsyncStorage.setItem('@session_token', responseJson.token);
+            this.props.navigation.navigate("Chat Home");
+        })
+        .catch((error) => {
+            console.log(error)
+        })
 
+
+        // console.log("Button clicked: " + this.state.email + " " + this.state.password)
+        // console.log("Validated and ready to send to the API")
+
+    }
+
+    _signUpNavigate = () => {
+        this.props.navigation.navigate("Sign Up")
     }
 
     render(){
@@ -83,18 +120,17 @@ export default class LoginScreen extends Component {
                     </View>
             
                     <View style={styles.loginbtn}>
-                        <TouchableOpacity onPress={this._onPressButton}>
+                        <TouchableOpacity onPress={this._login}>
                             <View style={styles.button}>
                                 <Text style={styles.buttonText}>Login</Text>
                             </View>
                         </TouchableOpacity>
                     </View>
 
-                    <View style={styles.loginbtn}>
-                        <TouchableOpacity onPress={this._onPressButton}>
+                    <View style={styles.signUpbtn}>
+                        <TouchableOpacity onPress={this._signUpNavigate}>
                             <View style={styles.button}>
                                 <Text style={styles.buttonText}>Sign Up</Text>
-                                onPress
                             </View>
                         </TouchableOpacity>
                     </View>
@@ -103,10 +139,6 @@ export default class LoginScreen extends Component {
                             <Text style={styles.error}>{this.state.error}</Text>
                         }
                     </>
-            
-                    <View>
-                        <Text style={styles.signup}>Need an account?</Text>
-                    </View>
                 </View>
             </View>
         )
@@ -131,6 +163,9 @@ const styles = StyleSheet.create({
       marginBottom: 10
     },
     loginbtn:{
+  
+    },
+    signUpbtn:{
   
     },
     signup:{
