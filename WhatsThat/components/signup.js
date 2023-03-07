@@ -3,39 +3,41 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'reac
 
 import * as EmailValidator from 'email-validator';
 
+import LoginScreen from './login';
+
 export default class SignUpScreen extends Component {
 
     constructor(props){
         super(props);
 
         this.state = {
-            firstName: "",
-            surname: "",
+            first_name: "",
+            last_name: "",
             email: "",
             password: "",
             error: "", 
             submitted: false
         }
 
-        this._onPressButton = this._onPressButton.bind(this)
+        this._signup = this._signup.bind(this)
     }
 
-    _onPressButton(){
+    _signup = () => {
         this.setState({submitted: true})
         this.setState({error: ""})
 
-        if(!(this.state.firstName && this.state.surname && this.state.email && this.state.password)){
+        if(!(this.state.first_name && this.state.last_name && this.state.email && this.state.password)){
             this.setState({error: "Must enter required fields"})
             return;
         }
 
         const NAME_REGEX = new RegExp("^[a-zA-Z\s]*$")
-        if(!NAME_REGEX.test(this.state.firstName)){
+        if(!NAME_REGEX.test(this.state.first_name)){
             this.setState({error: "Must enter a valid first name"})
             return;
         }
 
-        if(!NAME_REGEX.test(this.state.surname)){
+        if(!NAME_REGEX.test(this.state.last_name)){
             this.setState({error: "Must enter a valid surname"})
             return;
         }
@@ -51,9 +53,41 @@ export default class SignUpScreen extends Component {
             return;
         }
 
+        let to_send = {
+            first_name: this.state.first_name,
+            last_name: this.state.last_name,
+            email: this.state.email,
+            password: this.state.password,
+        }
 
-        console.log("Button clicked: " + this.state.firstName + " " + this.state.surname + " " + this.state.email + " " + this.state.password)
-        console.log("Validated and ready to send to the API")
+        return fetch("http://localhost:3333/api/1.0.0/user", {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(to_send)
+        })
+        .then((response) => {
+            if(response.status === 201){
+                return response.json()
+            }
+            else if(response.status === 400){
+                throw 'Failed validation';
+            }
+            else{
+                throw 'Something went wrong';
+            }
+        })
+        .then((responseJson) => {
+            console.log("User created with ID: ", responseJson)
+            this.props.navigation.navigate("Login");
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+
+        // console.log("Button clicked: " + this.state.first_name + " " + this.state.last_name + " " + this.state.email + " " + this.state.password)
+        // console.log("Validated and ready to send to the API")
 
     }
 
@@ -62,33 +96,33 @@ export default class SignUpScreen extends Component {
             <View style={styles.container}>
 
                 <View style={styles.formContainer}>
-                    <View style={styles.firstName}>
+                    <View style={styles.first_name}>
                         <Text>First Name:</Text>
                         <TextInput
                             style={{height: 40, borderWidth: 1, width: "100%"}}
                             placeholder="Enter first name"
-                            onChangeText={firstName => this.setState({firstName})}
-                            defaultValue={this.state.firstName}
+                            onChangeText={first_name => this.setState({first_name})}
+                            defaultValue={this.state.first_name}
                         />
 
                         <>
-                            {this.state.submitted && !this.state.firstName &&
+                            {this.state.submitted && !this.state.first_name &&
                                 <Text style={styles.error}>*First Name is required</Text>
                             }
                         </>
                     </View>
 
-                    <View style={styles.surname}>
+                    <View style={styles.last_name}>
                         <Text>Surname:</Text>
                         <TextInput
                             style={{height: 40, borderWidth: 1, width: "100%"}}
                             placeholder="Enter surname"
-                            onChangeText={surname => this.setState({surname})}
-                            defaultValue={this.state.surname}
+                            onChangeText={last_name => this.setState({last_name})}
+                            defaultValue={this.state.last_name}
                         />
 
                         <>
-                            {this.state.submitted && !this.state.surname &&
+                            {this.state.submitted && !this.state.last_name &&
                                 <Text style={styles.error}>*Surname is required</Text>
                             }
                         </>
@@ -129,7 +163,7 @@ export default class SignUpScreen extends Component {
                     </View>
             
                     <View style={styles.signUpBtn}>
-                        <TouchableOpacity onPress={this._onPressButton}>
+                        <TouchableOpacity onPress={this._signup}>
                             <View style={styles.button}>
                                 <Text style={styles.buttonText}>Sign Up</Text>
                             </View>
@@ -157,10 +191,10 @@ const styles = StyleSheet.create({
     formContainer: {
   
     },
-    firstName:{
+    first_name:{
       marginBottom: 5
     },
-    surname:{
+    last_name:{
       marginBottom: 5
     },
     email:{
