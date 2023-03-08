@@ -33,11 +33,11 @@ export default class LoginScreen extends Component {
             return;
         }
 
-        const PASSWORD_REGEX = new RegExp("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$")
-        if(!PASSWORD_REGEX.test(this.state.password)){
-            this.setState({error: "Password isn't strong enough (One upper, one lower, one special, one number, at least 8 characters long)"})
-            return;
-        }
+        // const PASSWORD_REGEX = new RegExp("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$")
+        // if(!PASSWORD_REGEX.test(this.state.password)){
+        //     this.setState({error: "Password isn't strong enough (One upper, one lower, one special, one number, at least 8 characters long)"})
+        //     return;
+        // }
 
         let to_send = {
             email: this.state.email,
@@ -56,7 +56,9 @@ export default class LoginScreen extends Component {
                 return response.json()
             }
             else if(response.status === 400){
+                this.setState({error: "Invalid email or password"})
                 throw 'Invalid email or password';
+                
             }
             else{
                 throw 'Something went wrong';
