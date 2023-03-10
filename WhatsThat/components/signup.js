@@ -72,18 +72,21 @@ export default class SignUpScreen extends Component {
                 return response.json()
             }
             else if(response.status === 400){
-                throw 'Failed validation';
+                throw "Email already exists or password isn't  strong enough";
             }
             else{
-                throw 'Something went wrong';
+                throw "Something went wrong";
             }
         })
         .then((responseJson) => {
             console.log("User created with ID: ", responseJson)
-            this.props.navigation.navigate("Login");
+            this.setState({"error": "User added successfully"})
+            this.setState({"submitted": false});
+            this.props.navigation.navigate("Login")
         })
         .catch((error) => {
-            console.log(error)
+            this.setState({"error": error})
+            this.setState({"submitted": false});
         })
 
         // console.log("Button clicked: " + this.state.first_name + " " + this.state.last_name + " " + this.state.email + " " + this.state.password)

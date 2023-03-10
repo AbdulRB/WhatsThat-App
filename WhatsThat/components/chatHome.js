@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, FlatList} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import LoginScreen from './login';
-
 export default class ChatScreen extends Component {
 
     constructor(props){

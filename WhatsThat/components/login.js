@@ -66,8 +66,18 @@ export default class LoginScreen extends Component {
         })
         .then(async (responseJson) => {
             console.log(responseJson)
-            await AsyncStorage.setItem('@session_token', responseJson.token);
-            this.props.navigation.navigate("Chat Home");
+            try{
+                await AsyncStorage.setItem("@user_id", responseJson.id);
+                await AsyncStorage.setItem("@session_token", responseJson.token);
+                
+                this.setState({"submitted": false});
+
+                this.props.navigation.navigate("Chat Home");
+            }
+            catch{
+                throw "Something went wrong"
+            }
+ 
         })
         .catch((error) => {
             console.log(error)

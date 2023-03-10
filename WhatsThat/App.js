@@ -7,8 +7,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import LoginScreen from './components/login';
 import SignUpScreen from './components/signup';
 import ChatScreen from './components/chatHome';
+import SettingsScreen from './components/settings';
 
-const Tab = createBottomTabNavigator();
+const AuthStack = createBottomTabNavigator();
 
 export default class App extends Component {
   constructor(props){
@@ -18,11 +19,16 @@ export default class App extends Component {
   render() {
     return (
       <NavigationContainer>
-        <Tab.Navigator>
-          <Tab.Screen name="Login" component={LoginScreen} />
-          <Tab.Screen name="Sign Up" component={SignUpScreen} />
-          <Tab.Screen name="Chat Home" component={ChatScreen} />
-        </Tab.Navigator>
+        <AuthStack.Navigator
+          screenOptions={{
+            headerShown: true
+          }}
+        >     
+            <AuthStack.Screen name="Login" component={LoginScreen} />
+            <AuthStack.Screen name="Sign Up" component={SignUpScreen} />
+            <AuthStack.Screen name="Chat Home" component={ChatScreen} />
+            <AuthStack.Screen name="Settings" component={SettingsScreen} />
+          </AuthStack.Navigator>
       </NavigationContainer>
     );
   }
