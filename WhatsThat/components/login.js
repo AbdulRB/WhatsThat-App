@@ -24,20 +24,14 @@ export default class LoginScreen extends Component {
         this.setState({ error: "" })
 
         if (!(this.state.email && this.state.password)) {
-            this.setState({ error: "Must enter email and password" })
+            this.setState({ error: "Must enter email and password, please try again..." })
             return;
         }
 
         if (!EmailValidator.validate(this.state.email)) {
-            this.setState({ error: "Must enter valid email" })
+            this.setState({ error: "Invalid email, please try again..." })
             return;
         }
-
-        // const PASSWORD_REGEX = new RegExp("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$")
-        // if(!PASSWORD_REGEX.test(this.state.password)){
-        //     this.setState({error: "Password isn't strong enough (One upper, one lower, one special, one number, at least 8 characters long)"})
-        //     return;
-        // }
 
         let to_send = {
             email: this.state.email,
@@ -56,7 +50,7 @@ export default class LoginScreen extends Component {
                     return response.json()
                 }
                 else if (response.status === 400) {
-                    this.setState({ error: "Invalid email or password" })
+                    this.setState({ error: "Invalid email or password, please try again..." })
                     throw 'Invalid email or password';
 
                 }
@@ -83,10 +77,6 @@ export default class LoginScreen extends Component {
                 console.log(error)
             })
 
-
-        // console.log("Button clicked: " + this.state.email + " " + this.state.password)
-        // console.log("Validated and ready to send to the API")
-
     }
 
     _signUpNavigate = () => {
@@ -105,12 +95,6 @@ export default class LoginScreen extends Component {
                             onChangeText={email => this.setState({ email })}
                             defaultValue={this.state.email}
                         />
-
-                        {/* <>
-                            {this.state.submitted && !this.state.email &&
-                                <Text style={styles.error}>*Email is required</Text>
-                            }
-                        </> */}
                     </View>
 
                     <View style={styles.password}>
@@ -122,20 +106,6 @@ export default class LoginScreen extends Component {
                             defaultValue={this.state.password}
                             secureTextEntry
                         />
-
-                        {/* <>
-                            {this.state.submitted && !this.state.password &&
-                                <Text style={styles.error}>*Password is required</Text>
-                            }
-                        </> */}
-                    </View>
-
-                    <View style={styles.loginbtn}>
-                        <TouchableOpacity onPress={this._login}>
-                            <View style={styles.loginBtn}>
-                                <Text style={styles.buttonText}>Login</Text>
-                            </View>
-                        </TouchableOpacity>
                     </View>
 
                     <>
@@ -143,6 +113,22 @@ export default class LoginScreen extends Component {
                             <Text style={styles.error}>{this.state.error}</Text>
                         }
                     </>
+
+                    <View style={styles.login}>
+                        <TouchableOpacity onPress={this._login}>
+                            <View style={styles.loginBtn}>
+                                <Text style={styles.buttonText}>Login</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.signup}>
+                        <TouchableOpacity onPress={this._signUpNavigate}>
+                            <View style={styles.signUpBtn}>
+                                <Text style={styles.buttonText}>Need an account?</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+
                 </View>
             </View>
         )
@@ -181,19 +167,28 @@ const styles = StyleSheet.create({
     loginBtn: {
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: 100,
-        marginHorizontal: 50,
+        marginHorizontal: 40,
         padding: 5,
         backgroundColor: '#15b0b3',
         borderRadius: 7,
-        marginBottom: 20
+        marginTop: 30
     },
-    signUpbtn: {
-
+    signUpBtn: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginHorizontal: 40,
+        padding: 5,
+        backgroundColor: '#15b0b3',
+        borderRadius: 7,
+        marginTop: 30
     },
-    signup: {
+    signup: {   
         justifyContent: "center",
-        textDecorationLine: "underline"
+        marginTop: 20
+    },
+    login: {
+        justifyContent: "center",
+        marginTop: 50
     },
     button: {
         marginBottom: 30,
@@ -203,10 +198,12 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: 'white',
         fontSize: 20,
-        paddingVertical: 5
+        paddingVertical: 10
     },
     error: {
+        marginTop: 25,
         color: "red",
-        fontWeight: '900'
+        fontWeight: '500',
+        fontSize: 15
     }
 });
