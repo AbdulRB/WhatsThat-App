@@ -53,18 +53,23 @@ export default class SettingsScreen extends Component {
         return (
             <View style={styles.container}>
                 <View style={styles.formContainer}>
-                    <View style={styles.signUpbtn}>
+
+                    <View style={styles.logoutBtn}>
                         <TouchableOpacity onPress={this._logout}>
                             <View style={styles.button}>
                                 <Text style={styles.buttonText}>Logout</Text>
                             </View>
                         </TouchableOpacity>
                     </View>
-                    {/* <>
-                        {this.state.error &&
-                            <Text style={styles.error}>{this.state.error}</Text>
-                        }
-                    </> */}
+
+                    <View style={styles.editProfileBtn}>
+                        <TouchableOpacity onPress={this._logout}>
+                            <View style={styles.button}>
+                                <Text style={styles.buttonText}>Edit Profile</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                    
                 </View>
             </View>
         )
@@ -93,8 +98,11 @@ const styles = StyleSheet.create({
     loginbtn:{
   
     },
-    signUpbtn:{
+    logoutBtn:{
   
+    },
+    editProfileBtn:{
+
     },
     signup:{
       justifyContent: "center",
