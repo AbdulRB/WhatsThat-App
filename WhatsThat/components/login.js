@@ -6,13 +6,13 @@ import * as EmailValidator from 'email-validator';
 
 export default class LoginScreen extends Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
 
         this.state = {
             email: "",
             password: "",
-            error: "", 
+            error: "",
             submitted: false
         }
 
@@ -20,16 +20,16 @@ export default class LoginScreen extends Component {
     }
 
     _login = async () => {
-        this.setState({submitted: true})
-        this.setState({error: ""})
+        this.setState({ submitted: true })
+        this.setState({ error: "" })
 
-        if(!(this.state.email && this.state.password)){
-            this.setState({error: "Must enter email and password"})
+        if (!(this.state.email && this.state.password)) {
+            this.setState({ error: "Must enter email and password" })
             return;
         }
 
-        if(!EmailValidator.validate(this.state.email)){
-            this.setState({error: "Must enter valid email"})
+        if (!EmailValidator.validate(this.state.email)) {
+            this.setState({ error: "Must enter valid email" })
             return;
         }
 
@@ -51,37 +51,37 @@ export default class LoginScreen extends Component {
             },
             body: JSON.stringify(to_send)
         })
-        .then((response) => {
-            if(response.status === 200){
-                return response.json()
-            }
-            else if(response.status === 400){
-                this.setState({error: "Invalid email or password"})
-                throw 'Invalid email or password';
-                
-            }
-            else{
-                throw 'Something went wrong';
-            }
-        })
-        .then(async (responseJson) => {
-            console.log(responseJson)
-            try{
-                await AsyncStorage.setItem("@user_id", responseJson.id);
-                await AsyncStorage.setItem("@session_token", responseJson.token);
-                
-                this.setState({"submitted": false});
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.json()
+                }
+                else if (response.status === 400) {
+                    this.setState({ error: "Invalid email or password" })
+                    throw 'Invalid email or password';
 
-                this.props.navigation.navigate("Chat Home");
-            }
-            catch{
-                throw "Something went wrong"
-            }
- 
-        })
-        .catch((error) => {
-            console.log(error)
-        })
+                }
+                else {
+                    throw 'Something went wrong';
+                }
+            })
+            .then(async (responseJson) => {
+                console.log(responseJson)
+                try {
+                    await AsyncStorage.setItem("@user_id", responseJson.id);
+                    await AsyncStorage.setItem("@session_token", responseJson.token);
+
+                    this.setState({ "submitted": false });
+
+                    this.props.navigation.navigate("Chat Home");
+                }
+                catch {
+                    throw "Something went wrong"
+                }
+
+            })
+            .catch((error) => {
+                console.log(error)
+            })
 
 
         // console.log("Button clicked: " + this.state.email + " " + this.state.password)
@@ -93,59 +93,51 @@ export default class LoginScreen extends Component {
         this.props.navigation.navigate("Sign Up")
     }
 
-    render(){
+    render() {
         return (
             <View style={styles.container}>
-
                 <View style={styles.formContainer}>
                     <View style={styles.email}>
-                        <Text>Email:</Text>
+                        <Text style={styles.text}>Email:</Text>
                         <TextInput
-                            style={{height: 40, borderWidth: 1, width: "100%"}}
-                            placeholder="Enter email"
-                            onChangeText={email => this.setState({email})}
+                            style={styles.textBox}
+                            placeholder="Enter email..."
+                            onChangeText={email => this.setState({ email })}
                             defaultValue={this.state.email}
                         />
 
-                        <>
+                        {/* <>
                             {this.state.submitted && !this.state.email &&
                                 <Text style={styles.error}>*Email is required</Text>
                             }
-                        </>
+                        </> */}
                     </View>
-            
+
                     <View style={styles.password}>
-                        <Text>Password:</Text>
+                        <Text style={styles.text}>Password:</Text>
                         <TextInput
-                            style={{height: 40, borderWidth: 1, width: "100%"}}
-                            placeholder="Enter password"
-                            onChangeText={password => this.setState({password})}
+                            style={styles.textBox}
+                            placeholder="Enter password..."
+                            onChangeText={password => this.setState({ password })}
                             defaultValue={this.state.password}
                             secureTextEntry
                         />
 
-                        <>
+                        {/* <>
                             {this.state.submitted && !this.state.password &&
                                 <Text style={styles.error}>*Password is required</Text>
                             }
-                        </>
+                        </> */}
                     </View>
-            
+
                     <View style={styles.loginbtn}>
                         <TouchableOpacity onPress={this._login}>
-                            <View style={styles.button}>
+                            <View style={styles.loginBtn}>
                                 <Text style={styles.buttonText}>Login</Text>
                             </View>
                         </TouchableOpacity>
                     </View>
 
-                    <View style={styles.signUpbtn}>
-                        <TouchableOpacity onPress={this._signUpNavigate}>
-                            <View style={styles.button}>
-                                <Text style={styles.buttonText}>Sign Up</Text>
-                            </View>
-                        </TouchableOpacity>
-                    </View>
                     <>
                         {this.state.error &&
                             <Text style={styles.error}>{this.state.error}</Text>
@@ -160,41 +152,61 @@ export default class LoginScreen extends Component {
 
 const styles = StyleSheet.create({
     container: {
-      flex: 1,
-      width: "80%",
-      alignItems: "stretch",
-      justifyContent: "center"
+        flex: 1,
+        padding: 24,
+        backgroundColor: '#dcf4f5',
     },
     formContainer: {
-  
+        marginTop: 100
     },
-    email:{
-      marginBottom: 5
+    textBox: {
+        height: 40, 
+        borderWidth: 1, 
+        borderRadius: 5,
+        paddingLeft: 10,
+        width: "100%", 
+        backgroundColor: '#f5f7f7',
+        fontSize: 16
     },
-    password:{
-      marginBottom: 10
+    text: {
+        fontSize: 17,
+        marginBottom: 10
     },
-    loginbtn:{
-  
+    email: {
+        marginVertical: 30
     },
-    signUpbtn:{
-  
+    password: {
+        marginBottom: 10
     },
-    signup:{
-      justifyContent: "center",
-      textDecorationLine: "underline"
+    loginBtn: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 100,
+        marginHorizontal: 50,
+        padding: 5,
+        backgroundColor: '#15b0b3',
+        borderRadius: 7,
+        marginBottom: 20
+    },
+    signUpbtn: {
+
+    },
+    signup: {
+        justifyContent: "center",
+        textDecorationLine: "underline"
     },
     button: {
-      marginBottom: 30,
-      backgroundColor: '#2196F3'
+        marginBottom: 30,
+        backgroundColor: '#2196F3'
     },
     buttonText: {
-      textAlign: 'center',
-      padding: 20,
-      color: 'white'
+        textAlign: 'center',
+        color: 'white',
+        fontSize: 20,
+        paddingVertical: 5
     },
     error: {
         color: "red",
         fontWeight: '900'
     }
-  });
+});
