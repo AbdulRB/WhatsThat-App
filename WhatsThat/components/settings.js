@@ -17,6 +17,10 @@ export default class SettingsScreen extends Component {
         this._logout = this._logout.bind(this)
     }
 
+    editProfileNavigate = () => {
+        this.props.navigation.navigate("Edit Profile")
+    }
+
     async _logout(){
         console.log("Logout")
 
@@ -36,7 +40,7 @@ export default class SettingsScreen extends Component {
                 console.log("Unauthorised")
                 await AsyncStorage.removeItem("@session_token")
                 await AsyncStorage.removeItem("@user_id")
-                this.props.navigation.navigate("Login")
+                this.props.navigation.navigate("Home")
             }
             else{
                 throw "Something went wrong"
@@ -63,7 +67,7 @@ export default class SettingsScreen extends Component {
                     </View>
 
                     <View style={styles.editProfileBtn}>
-                        <TouchableOpacity onPress={this._logout}>
+                        <TouchableOpacity onPress={this.editProfileNavigate}>
                             <View style={styles.button}>
                                 <Text style={styles.buttonText}>Edit Profile</Text>
                             </View>
@@ -81,10 +85,9 @@ export default class SettingsScreen extends Component {
 
 const styles = StyleSheet.create({
     container: {
-      flex: 1,
-      width: "80%",
-      alignItems: "stretch",
-      justifyContent: "center"
+        flex: 1,
+        padding: 24,
+        backgroundColor: '#dcf4f5',
     },
     formContainer: {
   
