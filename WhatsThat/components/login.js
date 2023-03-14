@@ -66,7 +66,7 @@ export default class LoginScreen extends Component {
 
                     this.setState({ "submitted": false });
 
-                    this.props.navigation.navigate("Chat Home");
+                    this.props.navigation.navigate("Tab Nav");
                 }
                 catch {
                     throw "Something went wrong"

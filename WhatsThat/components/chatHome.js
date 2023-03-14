@@ -77,12 +77,11 @@ export default class ChatScreen extends Component {
 
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      width: "80%",
-      alignItems: "stretch",
-      justifyContent: "center"
-    },
+  container: {
+    flex: 1,
+    padding: 24,
+    backgroundColor: '#dcf4f5',
+},
     formContainer: {
   
     },
