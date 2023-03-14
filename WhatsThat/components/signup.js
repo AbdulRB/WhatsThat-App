@@ -15,6 +15,7 @@ export default class SignUpScreen extends Component {
             last_name: "",
             email: "",
             password: "",
+            confirmPassword: "",
             error: "", 
             submitted: false
         }
@@ -26,24 +27,24 @@ export default class SignUpScreen extends Component {
         this.setState({submitted: true})
         this.setState({error: ""})
 
-        if(!(this.state.first_name && this.state.last_name && this.state.email && this.state.password)){
-            this.setState({error: "Must enter required fields"})
+        if(!(this.state.first_name && this.state.last_name && this.state.email && this.state.password && this.state.confirmPassword)){
+            this.setState({error: "Must enter required fields, please try again..."})
             return;
         }
 
         const NAME_REGEX = new RegExp("^[a-zA-Z\s]*$")
         if(!NAME_REGEX.test(this.state.first_name)){
-            this.setState({error: "Must enter a valid first name"})
+            this.setState({error: "Invalid first name, please try again..."})
             return;
         }
 
         if(!NAME_REGEX.test(this.state.last_name)){
-            this.setState({error: "Must enter a valid surname"})
+            this.setState({error: "Invalid surname, please try again..."})
             return;
         }
 
         if(!EmailValidator.validate(this.state.email)){
-            this.setState({error: "Must enter a valid email"})
+            this.setState({error: "Invalid email, please try again..."})
             return;
         }
 
@@ -52,6 +53,12 @@ export default class SignUpScreen extends Component {
             this.setState({error: "Password isn't strong enough (One upper, one lower, one special, one number, at least 8 characters long)"})
             return;
         }
+
+        if(this.state.password !== this.state.confirmPassword){
+            this.setState({error: "Passwords do not match, please try again..."})
+            return;
+        }
+
 
         let to_send = {
             first_name: this.state.first_name,
@@ -100,83 +107,71 @@ export default class SignUpScreen extends Component {
 
                 <View style={styles.formContainer}>
                     <View style={styles.first_name}>
-                        <Text>First Name:</Text>
+                        <Text style={styles.text}>First Name:</Text>
                         <TextInput
-                            style={{height: 40, borderWidth: 1, width: "100%"}}
-                            placeholder="Enter first name"
+                            style={styles.textBox}
+                            placeholder="Enter first name..."
                             onChangeText={first_name => this.setState({first_name})}
                             defaultValue={this.state.first_name}
                         />
-
-                        <>
-                            {this.state.submitted && !this.state.first_name &&
-                                <Text style={styles.error}>*First Name is required</Text>
-                            }
-                        </>
                     </View>
 
                     <View style={styles.last_name}>
-                        <Text>Surname:</Text>
+                        <Text style={styles.text}>Surname:</Text>
                         <TextInput
-                            style={{height: 40, borderWidth: 1, width: "100%"}}
-                            placeholder="Enter surname"
+                            style={styles.textBox}
+                            placeholder="Enter surname..."
                             onChangeText={last_name => this.setState({last_name})}
                             defaultValue={this.state.last_name}
                         />
-
-                        <>
-                            {this.state.submitted && !this.state.last_name &&
-                                <Text style={styles.error}>*Surname is required</Text>
-                            }
-                        </>
                     </View>
                     
                     
                     <View style={styles.email}>
-                        <Text>Email:</Text>
+                        <Text style={styles.text}>Email:</Text>
                         <TextInput
-                            style={{height: 40, borderWidth: 1, width: "100%"}}
-                            placeholder="Enter email"
+                            style={styles.textBox}
+                            placeholder="Enter email..."
                             onChangeText={email => this.setState({email})}
                             defaultValue={this.state.email}
                         />
-
-                        <>
-                            {this.state.submitted && !this.state.email &&
-                                <Text style={styles.error}>*Email is required</Text>
-                            }
-                        </>
                     </View>
             
                     <View style={styles.password}>
-                        <Text>Password:</Text>
+                        <Text style={styles.text}>Password:</Text>
                         <TextInput
-                            style={{height: 40, borderWidth: 1, width: "100%"}}
-                            placeholder="Enter password"
+                            style={styles.textBox}
+                            placeholder="Enter password..."
                             onChangeText={password => this.setState({password})}
                             defaultValue={this.state.password}
                             secureTextEntry
                         />
+                    </View>
 
-                        <>
-                            {this.state.submitted && !this.state.password &&
-                                <Text style={styles.error}>*Password is required</Text>
-                            }
-                        </>
+                    <View style={styles.password}>
+                        <Text style={styles.text}>Confirm Password:</Text>
+                        <TextInput
+                            style={styles.textBox}
+                            placeholder="Re-enter password..."
+                            onChangeText={confirmPassword => this.setState({confirmPassword})}
+                            defaultValue={this.state.confirmPassword}
+                            secureTextEntry
+                        />
                     </View>
-            
-                    <View style={styles.signUpBtn}>
-                        <TouchableOpacity onPress={this._signup}>
-                            <View style={styles.button}>
-                                <Text style={styles.buttonText}>Sign Up</Text>
-                            </View>
-                        </TouchableOpacity>
-                    </View>
+
                     <>
                         {this.state.error &&
                             <Text style={styles.error}>{this.state.error}</Text>
                         }
                     </>
+            
+                    <View style={styles.signup}>
+                        <TouchableOpacity onPress={this._signup}>
+                            <View style={styles.signUpBtn}>
+                                <Text style={styles.buttonText}>Sign Up</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </View>
         )
@@ -186,44 +181,65 @@ export default class SignUpScreen extends Component {
 
 const styles = StyleSheet.create({
     container: {
-      flex: 1,
-      width: "80%",
-      alignItems: "stretch",
-      justifyContent: "center"
+        flex: 1,
+        padding: 24,
+        backgroundColor: '#dcf4f5',
     },
     formContainer: {
-  
+        marginTop: 80
+    },
+    text: {
+        fontSize: 17,
+        marginBottom: 10
+    },
+    textBox: {
+        height: 40, 
+        borderWidth: 1, 
+        borderRadius: 5,
+        paddingLeft: 10,
+        width: "100%", 
+        backgroundColor: '#f5f7f7',
+        fontSize: 16
     },
     first_name:{
-      marginBottom: 5
+      marginBottom: 7
     },
     last_name:{
-      marginBottom: 5
+      marginBottom: 7
     },
     email:{
-      marginBottom: 5
+      marginBottom: 7
     },
     password:{
       marginBottom: 10
     },
-    signUpBtn:{
-  
+    signUpBtn: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginHorizontal: 40,
+        padding: 5,
+        backgroundColor: '#15b0b3',
+        borderRadius: 7,
+        marginTop: 30
     },
-    signup:{
-      justifyContent: "center",
-      textDecorationLine: "underline"
+    signup: {   
+        justifyContent: "center",
+        marginTop: 20
     },
     button: {
-      marginBottom: 30,
-      backgroundColor: '#2196F3'
+        marginBottom: 30,
+        backgroundColor: '#2196F3'
     },
     buttonText: {
-      textAlign: 'center',
-      padding: 20,
-      color: 'white'
+        textAlign: 'center',
+        color: 'white',
+        fontSize: 20,
+        paddingVertical: 10
     },
     error: {
+        marginTop: 25,
         color: "red",
-        fontWeight: '900'
+        fontWeight: '500',
+        fontSize: 15
     }
   });
