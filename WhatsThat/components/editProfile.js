@@ -9,6 +9,18 @@ export default class EditProfileScreen extends Component {
         super(props);
 
         this.state = {
+            sendFirstName: "",
+            sendLastName: "",
+            sendEmail: "",
+            
+            first_name: "",
+            last_name: "",
+            email: "",
+            password: "",
+            confirmPassword: "",
+
+            error: "", 
+            submitted: false,
             isLoading: true,
             listData: {}
         }
@@ -20,6 +32,7 @@ export default class EditProfileScreen extends Component {
         // });
   
         this.getUserInformation();
+        // this.setDetails();
       }
 
     getUserInformation = async () => {
@@ -55,19 +68,31 @@ export default class EditProfileScreen extends Component {
 
     }
 
-    extractUserFirstName = () => {
-        const currentUserFirstName = this.state.listData.first_name;
-        return currentUserFirstName;
-    }
+    // extractUserFirstName = () => {
+    //     // const currentFirstName = this.state.listData.first_name;
+    //     // return currentFirstName;
+    //     return this.state.listData.first_name;
+    // }
     
-    extractUserLastName = () => {
-        const currentUserLastName = this.state.listData.last_name;
-        return currentUserLastName;
-    }
+    // extractUserLastName = () => {
+    //     const currentLastName = this.state.listData.last_name;
+    //     return currentLastName;
+    // }
 
-    extractUserEmail = () => {
-        const currentUserEmail = this.state.listData.email;
-        return currentUserEmail;
+    // extractUserEmail = () => {
+    //     const currentEmail = this.state.listData.email;
+    //     return currentEmail;
+    // }
+
+    toSendInformation = async () => {
+        const currentFirstName = this.state.listData.first_name;
+        const currentLastName = this.state.listData.last_name;
+        const currentEmail = this.state.listData.email;
+
+        // if (this.state.first_name !== currentFirstName)
+        // {
+        //     this.setState({sendFirstName: })
+        // }
     }
 
     render() {
@@ -79,7 +104,7 @@ export default class EditProfileScreen extends Component {
                         <Text style={styles.text}>First Name:</Text>
                         <TextInput
                             style={styles.textBox}
-                            placeholder={this.extractUserFirstName()}
+                            placeholder={this.state.listData.first_name}
                             onChangeText={first_name => this.setState({ first_name })}
                             defaultValue={this.state.first_name}
                         />
@@ -89,7 +114,7 @@ export default class EditProfileScreen extends Component {
                         <Text style={styles.text}>Surname:</Text>
                         <TextInput
                             style={styles.textBox}
-                            placeholder={this.extractUserLastName()}
+                            placeholder={this.state.listData.last_name}
                             onChangeText={last_name => this.setState({ last_name })}
                             defaultValue={this.state.last_name}
                         />
@@ -100,7 +125,7 @@ export default class EditProfileScreen extends Component {
                         <Text style={styles.text}>Email:</Text>
                         <TextInput
                             style={styles.textBox}
-                            placeholder={this.extractUserEmail()}
+                            placeholder={this.state.listData.email}
                             onChangeText={email => this.setState({ email })}
                             defaultValue={this.state.email}
                         />
