@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, FlatList } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as EmailValidator from 'email-validator';
 import ChatScreen from './chatHome';
 
 export default class EditProfileScreen extends Component {
@@ -84,10 +85,83 @@ export default class EditProfileScreen extends Component {
     //     return currentEmail;
     // }
 
-    toSendInformation = async () => {
-        const currentFirstName = this.state.listData.first_name;
-        const currentLastName = this.state.listData.last_name;
-        const currentEmail = this.state.listData.email;
+    toSendUpdateInformation = async () => {
+        this.setState({submitted: true})
+        this.setState({error: ""})
+
+        const currentUserId = await AsyncStorage.getItem('@user_id');
+        let currentFirstName = this.state.listData.first_name;
+        let currentLastName = this.state.listData.last_name;
+        let currentEmail = this.state.listData.email;
+        // const currentPassword
+
+        const NAME_REGEX = new RegExp("^[a-zA-Z\s]*$")
+        if(!NAME_REGEX.test(this.state.first_name)){
+            this.setState({error: "Invalid first name, please try again..."})
+            return;
+        }
+        else{
+            currentFirstName = this.state.first_name;
+        }
+
+        if(!NAME_REGEX.test(currentLastName)){
+            this.setState({error: "Invalid surname, please try again..."})
+            return;
+        }
+        else{
+            currentLastName = this.state.last_name;
+        }
+
+        if(!EmailValidator.validate(currentEmail)){
+            this.setState({error: "Invalid email, please try again..."})
+            return;
+        }
+        else{
+            currentEmail = this.state.email;
+        }
+
+        let to_send = {
+            first_name: "Terry",
+            last_name: "James",
+            email: "terry@test.com",
+            password: "Burnage7863!",
+        }
+
+        return fetch("http://localhost:3333/api/1.0.0/user/" + currentUserId, {
+            method: 'PATCH',
+            headers: {
+                'X-Authorization': await AsyncStorage.getItem("@session_token"),
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(to_send)
+        })
+        .then((response) => {
+            if(response.status === 200){
+                // return response.json()
+            }
+            else if(response.status === 400){
+                throw "Details could not be updated" + response.json;
+            }
+            else{
+                throw "Something went wrong";
+            }
+        })
+        .then(() => {
+            console.log("Current user details updated")
+            this.setState({"error": "User details updated"})
+            this.setState({"submitted": false});
+        })
+        .catch((error) => {
+            this.setState({"error": error})
+            this.setState({"submitted": false});
+        })
+
+
+
+
+        // validate the first name then compare and then send it off
+
+
 
         // if (this.state.first_name !== currentFirstName)
         // {
@@ -160,7 +234,7 @@ export default class EditProfileScreen extends Component {
                     </>
 
                     <View style={styles.signup}>
-                        <TouchableOpacity onPress={this.extractUserInformation}>
+                        <TouchableOpacity onPress={this.toSendUpdateInformation}>
                             <View style={styles.signUpBtn}>
                                 <Text style={styles.buttonText}>Apply Changes</Text>
                             </View>
