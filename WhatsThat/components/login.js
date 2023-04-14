@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Base64 } from 'js-base64';
 
 import * as EmailValidator from 'email-validator';
 
@@ -10,7 +11,7 @@ export default class LoginScreen extends Component {
         super(props);
 
         this.state = {
-            email: "arbabar@test.com",
+            email: "test@account.com",
             password: "Hello123!",
             error: "",
             submitted: false
@@ -63,6 +64,10 @@ export default class LoginScreen extends Component {
                 try {
                     await AsyncStorage.setItem("@user_id", responseJson.id);
                     await AsyncStorage.setItem("@session_token", responseJson.token);
+                    
+                    const encodePassword = Base64.encode(this.state.password);
+                    // const hashedPassword = bcrypt.hashSync(this.state.password, 10)
+                    AsyncStorage.setItem("currentPassword", encodePassword);
 
                     this.setState({ "submitted": false });
 

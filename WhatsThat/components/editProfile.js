@@ -3,6 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, FlatList } 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as EmailValidator from 'email-validator';
 import ChatScreen from './chatHome';
+import { Base64 } from 'js-base64';
 
 export default class EditProfileScreen extends Component {
 
@@ -69,34 +70,90 @@ export default class EditProfileScreen extends Component {
 
     }
 
-    // extractUserFirstName = () => {
-    //     // const currentFirstName = this.state.listData.first_name;
-    //     // return currentFirstName;
-    //     return this.state.listData.first_name;
-    // }
-    
-    // extractUserLastName = () => {
-    //     const currentLastName = this.state.listData.last_name;
-    //     return currentLastName;
+    // setUserInformation = async () => {
+    //     this.setState({error: ""})
+
+
+    //     let currentFirstName = this.state.listData.first_name;
+    //     let currentLastName = this.state.listData.last_name;
+    //     let currentEmail = this.state.listData.email;
+    //     let currentPassword = await AsyncStorage.getItem('currentPassword');
+
+    //     const NAME_REGEX = new RegExp("^[a-zA-Z\s]*$")
+    //     if(this.state.first_name === ""){
+    //         currentFirstName = this.state.listData.first_name;
+    //     }
+    //     else if(!NAME_REGEX.test(this.state.first_name)){
+    //         this.setState({error: "Invalid first name, please try again..."})
+    //         return;
+    //     }
+    //     else{
+    //         currentFirstName = this.state.first_name;
+    //     }
+
+    //     if(this.state.last_name === ""){
+    //         currentLastName = this.state.listData.last_name;
+    //     }
+    //     else if(!NAME_REGEX.test(this.state.last_name)){
+    //         this.setState({error: "Invalid surname, please try again..."})
+    //         return;
+    //     }
+    //     else{
+    //         currentLastName = this.state.last_name;
+    //     }
+
+    //     if(this.state.email === ""){
+    //         currentEmail = this.state.listData.email;
+    //     }
+    //     else if(!EmailValidator.validate(this.state.email)){
+    //         this.setState({error: "Invalid email, please try again..."})
+    //         return;
+    //     }
+    //     else{
+    //         currentEmail = this.state.email;
+    //     }
+
+    //     const PASSWORD_REGEX = new RegExp("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$")
+    //     if(this.state.password === ""){
+    //         currentPassword = await AsyncStorage.getItem('currentPassword');
+    //     }
+    //     else if(!PASSWORD_REGEX.test(this.state.password)){
+    //         this.setState({error: "Password isn't strong enough (One upper, one lower, one special, one number, at least 8 characters long)"})
+    //         return;
+    //     }
+    //     if(this.state.password !== this.state.confirmPassword){
+    //         this.setState({error: "Passwords do not match, please try again..."})
+    //         return;
+    //     }
+    //     else{
+    //         currentPassword = this.state.password;
+    //     }
+
+    //     let to_send = {
+    //         first_name: currentFirstName,
+    //         last_name: currentLastName,
+    //         email: currentEmail,
+    //         password: currentPassword,
+    //     }
+
+    //     // return to_send;
     // }
 
-    // extractUserEmail = () => {
-    //     const currentEmail = this.state.listData.email;
-    //     return currentEmail;
-    // }
-
-    toSendUpdateInformation = async () => {
+    updateUserInformation = async () => {
         this.setState({submitted: true})
         this.setState({error: ""})
 
-        const currentUserId = await AsyncStorage.getItem('@user_id');
         let currentFirstName = this.state.listData.first_name;
         let currentLastName = this.state.listData.last_name;
         let currentEmail = this.state.listData.email;
-        // const currentPassword
+        let securePassword = await AsyncStorage.getItem('currentPassword');
+        let currentPassword = Base64.decode(securePassword);
 
         const NAME_REGEX = new RegExp("^[a-zA-Z\s]*$")
-        if(!NAME_REGEX.test(this.state.first_name)){
+        if(this.state.first_name === ""){
+            currentFirstName = this.state.listData.first_name;
+        }
+        else if(!NAME_REGEX.test(this.state.first_name)){
             this.setState({error: "Invalid first name, please try again..."})
             return;
         }
@@ -104,7 +161,10 @@ export default class EditProfileScreen extends Component {
             currentFirstName = this.state.first_name;
         }
 
-        if(!NAME_REGEX.test(currentLastName)){
+        if(this.state.last_name === ""){
+            currentLastName = this.state.listData.last_name;
+        }
+        else if(!NAME_REGEX.test(this.state.last_name)){
             this.setState({error: "Invalid surname, please try again..."})
             return;
         }
@@ -112,7 +172,10 @@ export default class EditProfileScreen extends Component {
             currentLastName = this.state.last_name;
         }
 
-        if(!EmailValidator.validate(currentEmail)){
+        if(this.state.email === ""){
+            currentEmail = this.state.listData.email;
+        }
+        else if(!EmailValidator.validate(this.state.email)){
             this.setState({error: "Invalid email, please try again..."})
             return;
         }
@@ -120,12 +183,30 @@ export default class EditProfileScreen extends Component {
             currentEmail = this.state.email;
         }
 
-        let to_send = {
-            first_name: "Terry",
-            last_name: "James",
-            email: "terry@test.com",
-            password: "Burnage7863!",
+        const PASSWORD_REGEX = new RegExp("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$")
+        if(this.state.password === ""){
+            currentPassword = await AsyncStorage.getItem('currentPassword');
         }
+        else if(!PASSWORD_REGEX.test(this.state.password)){
+            this.setState({error: "Password isn't strong enough (One upper, one lower, one special, one number, at least 8 characters long)"})
+            return;
+        }
+        if(this.state.password !== this.state.confirmPassword){
+            this.setState({error: "Passwords do not match, please try again..."})
+            return;
+        }
+        else{
+            currentPassword = this.state.password;
+        }
+
+        let to_send = {
+            first_name: currentFirstName,
+            last_name: currentLastName,
+            email: currentEmail,
+            password: currentPassword,
+        }
+        const currentUserId = await AsyncStorage.getItem('@user_id');
+        // let to_send = this.setUserInformation.to_send;
 
         return fetch("http://localhost:3333/api/1.0.0/user/" + currentUserId, {
             method: 'PATCH',
@@ -138,6 +219,7 @@ export default class EditProfileScreen extends Component {
         .then((response) => {
             if(response.status === 200){
                 // return response.json()
+                this.getUserInformation();
             }
             else if(response.status === 400){
                 throw "Details could not be updated" + response.json;
@@ -155,18 +237,6 @@ export default class EditProfileScreen extends Component {
             this.setState({"error": error})
             this.setState({"submitted": false});
         })
-
-
-
-
-        // validate the first name then compare and then send it off
-
-
-
-        // if (this.state.first_name !== currentFirstName)
-        // {
-        //     this.setState({sendFirstName: })
-        // }
     }
 
     render() {
@@ -234,7 +304,7 @@ export default class EditProfileScreen extends Component {
                     </>
 
                     <View style={styles.signup}>
-                        <TouchableOpacity onPress={this.toSendUpdateInformation}>
+                        <TouchableOpacity onPress={this.updateUserInformation}>
                             <View style={styles.signUpBtn}>
                                 <Text style={styles.buttonText}>Apply Changes</Text>
                             </View>

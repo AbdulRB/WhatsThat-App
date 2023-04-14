@@ -76,6 +76,7 @@ export default class SignUpScreen extends Component {
         })
         .then((response) => {
             if(response.status === 201){
+                this.setState({first_name: "", last_name: "", email: "", password: "", confirmPassword: ""});
                 return response.json()
             }
             else if(response.status === 400){
@@ -92,7 +93,7 @@ export default class SignUpScreen extends Component {
             this.props.navigation.navigate("Login")
         })
         .catch((error) => {
-            this.setState({"error": error})
+            this.setState({"error": error});
             this.setState({"submitted": false});
         })
 
