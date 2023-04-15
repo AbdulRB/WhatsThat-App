@@ -13,6 +13,7 @@ import ChatScreen from './components/chatHome';
 import SettingsScreen from './components/settings';
 import ContactsScreen from './components/contacts';
 import EditProfileScreen from './components/editProfile';
+import EditProfilePictureScreen from './components/editPicture';
 import HomeScreen from './components/homePage';
 
 const AuthTab = createBottomTabNavigator();
@@ -58,6 +59,7 @@ export default class App extends Component {
           <AuthStack.Screen name="Sign Up" component={SignUpScreen} />
           <AuthStack.Screen name="Tab Nav" component={MainTabNav} options={{headerShown: false}} />
           <AuthStack.Screen name="Edit Profile" component={EditProfileScreen} />
+          <AuthStack.Screen name="Edit Profile Picture" component={EditProfilePictureScreen} />
         </AuthStack.Navigator>
       </NavigationContainer>
     );

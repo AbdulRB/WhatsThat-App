@@ -21,6 +21,10 @@ export default class SettingsScreen extends Component {
         this.props.navigation.navigate("Edit Profile")
     }
 
+    editProfilePictureNavigate = () => {
+        this.props.navigation.navigate("Edit Profile Picture")
+    }
+
     async _logout(){
         console.log("Logout")
 
@@ -58,6 +62,22 @@ export default class SettingsScreen extends Component {
             <View style={styles.container}>
                 <View style={styles.formContainer}>
 
+                    <View style={styles.editProfileBtn}>
+                        <TouchableOpacity onPress={this.editProfileNavigate}>
+                            <View style={styles.button}>
+                                <Text style={styles.buttonText}>Edit Profile</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+
+                    <View style={styles.editProfileBtn}>
+                        <TouchableOpacity onPress={this.editProfilePictureNavigate}>
+                            <View style={styles.button}>
+                                <Text style={styles.buttonText}>Edit Profile Picture</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+
                     <View style={styles.logoutBtn}>
                         <TouchableOpacity onPress={this._logout}>
                             <View style={styles.button}>
@@ -66,14 +86,6 @@ export default class SettingsScreen extends Component {
                         </TouchableOpacity>
                     </View>
 
-                    <View style={styles.editProfileBtn}>
-                        <TouchableOpacity onPress={this.editProfileNavigate}>
-                            <View style={styles.button}>
-                                <Text style={styles.buttonText}>Edit Profile</Text>
-                            </View>
-                        </TouchableOpacity>
-                    </View>
-                    
                 </View>
             </View>
         )
