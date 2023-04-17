@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, FlatList } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import * as EmailValidator from 'email-validator';
-import ChatScreen from './chatHome';
-import { Base64 } from 'js-base64';
 
-export default class EditProfileScreen extends Component {
+export default class EditPictureScreen extends Component {
 
     constructor(props) {
         super(props);
@@ -15,7 +12,7 @@ export default class EditProfileScreen extends Component {
             error: "", 
             submitted: false,
             isLoading: true,
-            listData: {}
+            photo: ""
         }
     }
 
@@ -31,74 +28,45 @@ export default class EditProfileScreen extends Component {
         this.unsubscribe();
     }
 
+
+    cameraScreenNavigate = () => {
+        this.props.navigation.navigate("Update Picture")
+    }
+
     getProfilePicture = async () => {
-        const currentUserId = await AsyncStorage.getItem('@user_id');
+        let currentUserId = await AsyncStorage.getItem('@user_id');
 
         return fetch('http://localhost:3333/api/1.0.0/user/'+ currentUserId + '/photo', {
             headers: {
                  "X-Authorization": await AsyncStorage.getItem("@session_token")
             }
         })
-    }
+        .then((response) =>{
+            if(response.status === 200){
+                return response.blob()
+            }
+            else{
+                throw "Something went wrong"
+            }
+        })
+        .then((resBlob) => {
+            let data = URL.createObjectURL(resBlob);
 
+            this.setState({
+                photo: data,
+                isLoading: false
+            })
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+    }
 
     render() {
         return (
             <View style={styles.container}>
 
                 <View style={styles.formContainer}>
-                    <View style={styles.first_name}>
-                        <Text style={styles.text}>First Name:</Text>
-                        <TextInput
-                            style={styles.textBox}
-                            placeholder={this.state.listData.first_name}
-                            onChangeText={first_name => this.setState({ first_name })}
-                            defaultValue={this.state.first_name}
-                        />
-                    </View>
-
-                    <View style={styles.last_name}>
-                        <Text style={styles.text}>Surname:</Text>
-                        <TextInput
-                            style={styles.textBox}
-                            placeholder={this.state.listData.last_name}
-                            onChangeText={last_name => this.setState({ last_name })}
-                            defaultValue={this.state.last_name}
-                        />
-                    </View>
-
-
-                    <View style={styles.email}>
-                        <Text style={styles.text}>Email:</Text>
-                        <TextInput
-                            style={styles.textBox}
-                            placeholder={this.state.listData.email}
-                            onChangeText={email => this.setState({ email })}
-                            defaultValue={this.state.email}
-                        />
-                    </View>
-
-                    <View style={styles.password}>
-                        <Text style={styles.text}>Password:</Text>
-                        <TextInput
-                            style={styles.textBox}
-                            placeholder="Enter password..."
-                            onChangeText={password => this.setState({ password })}
-                            defaultValue={this.state.password}
-                            secureTextEntry
-                        />
-                    </View>
-
-                    <View style={styles.password}>
-                        <Text style={styles.text}>Confirm Password:</Text>
-                        <TextInput
-                            style={styles.textBox}
-                            placeholder="Re-enter password..."
-                            onChangeText={confirmPassword => this.setState({ confirmPassword })}
-                            defaultValue={this.state.confirmPassword}
-                            secureTextEntry
-                        />
-                    </View>
 
                     <>
                         {this.state.error &&
@@ -106,10 +74,31 @@ export default class EditProfileScreen extends Component {
                         }
                     </>
 
+                    <View>
+                    <Image
+                        source={{
+                            uri: this.state.photo
+                        }}
+                        style={{
+                            width: 100,
+                            height: 100
+                        }}
+                    />
+                    </View>
+
+
                     <View style={styles.signup}>
                         <TouchableOpacity onPress={this.updateUserInformation}>
                             <View style={styles.signUpBtn}>
-                                <Text style={styles.buttonText}>Apply Changes</Text>
+                                <Text style={styles.buttonText}>Update</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+
+                    <View style={styles.signup}>
+                        <TouchableOpacity onPress={this.cameraScreenNavigate}>
+                            <View style={styles.signUpBtn}>
+                                <Text style={styles.buttonText}>Update Picture</Text>
                             </View>
                         </TouchableOpacity>
                     </View>

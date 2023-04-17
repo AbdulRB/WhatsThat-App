@@ -14,6 +14,7 @@ import SettingsScreen from './components/settings';
 import ContactsScreen from './components/contacts';
 import EditProfileScreen from './components/editProfile';
 import EditProfilePictureScreen from './components/editPicture';
+import UpdatePicture from './components/updatePicture';
 import HomeScreen from './components/homePage';
 
 const AuthTab = createBottomTabNavigator();
@@ -60,6 +61,7 @@ export default class App extends Component {
           <AuthStack.Screen name="Tab Nav" component={MainTabNav} options={{headerShown: false}} />
           <AuthStack.Screen name="Edit Profile" component={EditProfileScreen} />
           <AuthStack.Screen name="Edit Profile Picture" component={EditProfilePictureScreen} />
+          <AuthStack.Screen name="Update Picture" component={UpdatePicture} />
         </AuthStack.Navigator>
       </NavigationContainer>
     );
