@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, FlatList } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as EmailValidator from 'email-validator';
-import ChatScreen from './chatHome';
 import { Base64 } from 'js-base64';
 
 export default class EditProfileScreen extends Component {

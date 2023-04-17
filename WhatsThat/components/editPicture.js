@@ -74,7 +74,7 @@ export default class EditPictureScreen extends Component {
                         }
                     </>
 
-                    <View>
+                    {/* <View>
                     <Image
                         source={{
                             uri: this.state.photo
@@ -84,7 +84,7 @@ export default class EditPictureScreen extends Component {
                             height: 100
                         }}
                     />
-                    </View>
+                    </View> */}
 
 
                     <View style={styles.signup}>
