@@ -10,10 +10,12 @@ import { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function UpdatePicture({route, navigation}) {
+export default function UpdatePicture() {
     const [type, setType] = useState(CameraType.back);
     const [permission, requestPermission] = Camera.useCameraPermissions();
     const [camera, setCamera] = useState(null);
+
+    Camera.requestCameraPermissionsAsync();
 
     function toggleCameraType(){
         setType(current => (current === CameraType.back ? CameraType.front : CameraType.back));
