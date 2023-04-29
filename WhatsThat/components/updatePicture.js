@@ -5,12 +5,17 @@
 // import ChatScreen from './chatHome';
 // import { Base64 } from 'js-base64';
 
+import React, { Component } from 'react';
 import { Camera, CameraType, onCameraReady, CameraPictureOptions } from 'expo-camera';
 import { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function UpdatePicture() {
+export default function UpdatePicture({navigation}) {
+    // function editPictureNavigate(){
+    //     this.props.navigation.navigate("Edit Profile Picture")
+    // }
+    
     const [type, setType] = useState(CameraType.back);
     const [permission, requestPermission] = Camera.useCameraPermissions();
     const [camera, setCamera] = useState(null);
@@ -48,7 +53,7 @@ export default function UpdatePicture() {
         .then((response) => {
             if(response.status === 200){
                 console.log("Image updated")
-                this.props.navigation.navigate("Edit Profile Picture");
+                navigation.navigate("Edit Profile Picture");
             }
             else{
                 throw "Something went wrong"
@@ -61,16 +66,24 @@ export default function UpdatePicture() {
     }
 
     if(!permission || !permission.granted){
-        return(<Text>No access to camera</Text>)
+        return(<Text>Camera permission denied</Text>)
     }
     else{
         return(
             <View style={styles.container}>
                 <Camera type={type} ref={ref => setCamera(ref)}>
-                    <View>
-                        <TouchableOpacity style={styles.signUpBtn} onPress={toggleCameraType}>
-                            <Text style={styles.text}>Flip Camera</Text>
-                        </TouchableOpacity>
+                    <View style={styles.buttonContainer}>
+                        <View>
+                            <TouchableOpacity style={styles.signUpBtn} onPress={toggleCameraType}>
+                                <Text style={styles.buttonText}>Flip Camera</Text>
+                            </TouchableOpacity>
+                        </View>
+
+                        <View>
+                            <TouchableOpacity style={styles.signUpBtn} onPress={takePhoto}>
+                                <Text style={styles.buttonText}>Take Picture</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 </Camera>
             </View>
@@ -83,11 +96,10 @@ export default function UpdatePicture() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 24,
         backgroundColor: '#dcf4f5',
     },
-    formContainer: {
-        marginTop: 80
+    buttonContainer: {
+        marginTop: 600
     },
     text: {
         fontSize: 17,
@@ -102,26 +114,13 @@ const styles = StyleSheet.create({
         backgroundColor: '#f5f7f7',
         fontSize: 16
     },
-    first_name: {
-        marginBottom: 7
-    },
-    last_name: {
-        marginBottom: 7
-    },
-    email: {
-        marginBottom: 7
-    },
-    password: {
-        marginBottom: 10
-    },
     signUpBtn: {
         alignItems: 'center',
         justifyContent: 'center',
-        marginHorizontal: 40,
-        padding: 5,
+        marginHorizontal: 100,
         backgroundColor: '#15b0b3',
         borderRadius: 7,
-        marginTop: 30
+        marginTop: 20
     },
     signup: {
         justifyContent: "center",
@@ -134,7 +133,7 @@ const styles = StyleSheet.create({
     buttonText: {
         textAlign: 'center',
         color: 'white',
-        fontSize: 20,
+        fontSize: 17,
         paddingVertical: 10
     },
     error: {

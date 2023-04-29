@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#dcf4f5',
     },
     formContainer: {
-  
+        marginTop: 80
     },
     email:{
       marginBottom: 5
@@ -124,13 +124,18 @@ const styles = StyleSheet.create({
       textDecorationLine: "underline"
     },
     button: {
-      marginBottom: 30,
-      backgroundColor: '#2196F3'
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginHorizontal: 30,
+        backgroundColor: '#15b0b3',
+        borderRadius: 7,
+        marginBottom: 30
     },
     buttonText: {
-      textAlign: 'center',
-      padding: 20,
-      color: 'white'
+        textAlign: 'center',
+        color: 'white',
+        fontSize: 20,
+        paddingVertical: 10
     },
     error: {
         color: "red",

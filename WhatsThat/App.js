@@ -40,18 +40,6 @@ export default class App extends Component {
   render() {
     return (
       <NavigationContainer>
-        {/* <AuthTab.Navigator
-          screenOptions={{
-            headerShown: true
-          }}
-        >     
-            <AuthTab.Screen name="Login" component={LoginScreen} />
-            <AuthTab.Screen name="Sign Up" component={SignUpScreen} />
-            <AuthTab.Screen name="Chat Home" component={ChatScreen} />
-            <AuthTab.Screen name="Contacts" component={ContactsScreen} />
-            <AuthTab.Screen name="Settings" component={SettingsScreen} />
-        </AuthTab.Navigator> */}
-
         <AuthStack.Navigator
           initialRouteName="Home"
           >
@@ -66,7 +54,6 @@ export default class App extends Component {
       </NavigationContainer>
     );
   }
-
 }
 
 const styles = StyleSheet.create({

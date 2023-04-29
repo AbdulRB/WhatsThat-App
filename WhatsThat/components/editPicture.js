@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, FlatList } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Image } from 'react-native';
+
 
 export default class EditPictureScreen extends Component {
 
@@ -31,6 +33,10 @@ export default class EditPictureScreen extends Component {
 
     cameraScreenNavigate = () => {
         this.props.navigation.navigate("Update Picture")
+    }
+
+    reloadNavigation = () => {
+        this.componentDidMount
     }
 
     getProfilePicture = async () => {
@@ -74,28 +80,23 @@ export default class EditPictureScreen extends Component {
                         }
                     </>
 
-                    {/* <View>
                     <Image
                         source={{
                             uri: this.state.photo
                         }}
-                        style={{
-                            width: 100,
-                            height: 100
-                        }}
+                        style={styles.imageStyle}
                     />
-                    </View> */}
 
 
-                    <View style={styles.signup}>
-                        <TouchableOpacity onPress={this.updateUserInformation}>
+                    <View>
+                        <TouchableOpacity onPress={this.reloadNavigation}>
                             <View style={styles.signUpBtn}>
                                 <Text style={styles.buttonText}>Update</Text>
                             </View>
                         </TouchableOpacity>
                     </View>
 
-                    <View style={styles.signup}>
+                    <View>
                         <TouchableOpacity onPress={this.cameraScreenNavigate}>
                             <View style={styles.signUpBtn}>
                                 <Text style={styles.buttonText}>Update Picture</Text>
@@ -110,12 +111,23 @@ export default class EditPictureScreen extends Component {
 }
 
 const styles = StyleSheet.create({
+    imageStyle: {
+        width: 250,
+        height: 250,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginHorizontal: 'auto',
+        marginBottom: 80
+    },
     container: {
         flex: 1,
         padding: 24,
         backgroundColor: '#dcf4f5',
     },
     formContainer: {
+        marginTop: 70
+    },
+    buttonContainer: {
         marginTop: 80
     },
     text: {
@@ -131,30 +143,17 @@ const styles = StyleSheet.create({
         backgroundColor: '#f5f7f7',
         fontSize: 16
     },
-    first_name: {
-        marginBottom: 7
-    },
-    last_name: {
-        marginBottom: 7
-    },
-    email: {
-        marginBottom: 7
-    },
-    password: {
-        marginBottom: 10
-    },
     signUpBtn: {
         alignItems: 'center',
         justifyContent: 'center',
-        marginHorizontal: 40,
-        padding: 5,
+        marginHorizontal: 30,
         backgroundColor: '#15b0b3',
         borderRadius: 7,
-        marginTop: 30
+        marginBottom: 30
     },
     signup: {
         justifyContent: "center",
-        marginTop: 20
+        marginTop: 40
     },
     button: {
         marginBottom: 30,
