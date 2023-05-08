@@ -23,14 +23,14 @@ const AuthStack = createStackNavigator();
 const MainTabNav = () => {
   return (
     <AuthTab.Navigator
-      initialRouteName='Settings'
+      initialRouteName='Contacts'
       screenOptions={{headerShown: false}}>
       <AuthTab.Screen name="Chats" component={ChatScreen} />
       <AuthTab.Screen name="Contacts" component={ContactsScreen} />
       <AuthTab.Screen name="Settings" component={SettingsScreen} />
     </AuthTab.Navigator>
   );
-}
+};
 
 export default class App extends Component {
   constructor(props){
@@ -41,7 +41,7 @@ export default class App extends Component {
     return (
       <NavigationContainer>
         <AuthStack.Navigator
-          initialRouteName="Home"
+          initialRouteName="Tab Nav"
           >
           <AuthStack.Screen name="Home" component={HomeScreen} options={{headerShown: false}} />
           <AuthStack.Screen name="Login" component={LoginScreen} />
@@ -53,14 +53,5 @@ export default class App extends Component {
         </AuthStack.Navigator>
       </NavigationContainer>
     );
-  }
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+  };
+};

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import styles from '../style';
 
 export default class SettingsScreen extends Component {
 
@@ -14,7 +15,7 @@ export default class SettingsScreen extends Component {
         //     submitted: false
         // }
 
-        this._logout = this._logout.bind(this)
+        this.logout = this.logout.bind(this)
     }
 
     editProfileNavigate = () => {
@@ -25,7 +26,7 @@ export default class SettingsScreen extends Component {
         this.props.navigation.navigate("Edit Profile Picture")
     }
 
-    async _logout(){
+    async logout(){
         console.log("Logout")
 
         return fetch("http://localhost:3333/api/1.0.0/logout", {
@@ -62,25 +63,25 @@ export default class SettingsScreen extends Component {
             <View style={styles.container}>
                 <View style={styles.formContainer}>
 
-                    <View style={styles.editProfileBtn}>
+                    <View>
                         <TouchableOpacity onPress={this.editProfileNavigate}>
-                            <View style={styles.button}>
+                            <View style={styles.settingButtons}>
                                 <Text style={styles.buttonText}>Edit Profile</Text>
                             </View>
                         </TouchableOpacity>
                     </View>
 
-                    <View style={styles.editProfileBtn}>
+                    <View>
                         <TouchableOpacity onPress={this.editProfilePictureNavigate}>
-                            <View style={styles.button}>
+                            <View style={styles.settingButtons}>
                                 <Text style={styles.buttonText}>Edit Profile Picture</Text>
                             </View>
                         </TouchableOpacity>
                     </View>
 
-                    <View style={styles.logoutBtn}>
-                        <TouchableOpacity onPress={this._logout}>
-                            <View style={styles.button}>
+                    <View>
+                        <TouchableOpacity onPress={this.logout}>
+                            <View style={styles.settingButtons}>
                                 <Text style={styles.buttonText}>Logout</Text>
                             </View>
                         </TouchableOpacity>
@@ -90,55 +91,4 @@ export default class SettingsScreen extends Component {
             </View>
         )
     }
-
-
-
-}
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 24,
-        backgroundColor: '#dcf4f5',
-    },
-    formContainer: {
-        marginTop: 80
-    },
-    email:{
-      marginBottom: 5
-    },
-    password:{
-      marginBottom: 10
-    },
-    loginbtn:{
-  
-    },
-    logoutBtn:{
-  
-    },
-    editProfileBtn:{
-
-    },
-    signup:{
-      justifyContent: "center",
-      textDecorationLine: "underline"
-    },
-    button: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginHorizontal: 30,
-        backgroundColor: '#15b0b3',
-        borderRadius: 7,
-        marginBottom: 30
-    },
-    buttonText: {
-        textAlign: 'center',
-        color: 'white',
-        fontSize: 20,
-        paddingVertical: 10
-    },
-    error: {
-        color: "red",
-        fontWeight: '900'
-    }
-  });
+};

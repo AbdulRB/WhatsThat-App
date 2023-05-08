@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, FlatList } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Image } from 'react-native';
-
+import styles from '../style';
 
 export default class EditPictureScreen extends Component {
 
@@ -29,7 +29,6 @@ export default class EditPictureScreen extends Component {
     componentWillUnmount(){
         this.unsubscribe();
     }
-
 
     cameraScreenNavigate = () => {
         this.props.navigation.navigate("Update Picture")
@@ -87,10 +86,9 @@ export default class EditPictureScreen extends Component {
                         style={styles.imageStyle}
                     />
 
-
                     <View>
                         <TouchableOpacity onPress={this.reloadNavigation}>
-                            <View style={styles.signUpBtn}>
+                            <View style={styles.applyBtn}>
                                 <Text style={styles.buttonText}>Update</Text>
                             </View>
                         </TouchableOpacity>
@@ -98,7 +96,7 @@ export default class EditPictureScreen extends Component {
 
                     <View>
                         <TouchableOpacity onPress={this.cameraScreenNavigate}>
-                            <View style={styles.signUpBtn}>
+                            <View style={styles.applyBtn}>
                                 <Text style={styles.buttonText}>Update Picture</Text>
                             </View>
                         </TouchableOpacity>
@@ -107,68 +105,4 @@ export default class EditPictureScreen extends Component {
             </View>
         )
     }
-
-}
-
-const styles = StyleSheet.create({
-    imageStyle: {
-        width: 250,
-        height: 250,
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginHorizontal: 'auto',
-        marginBottom: 80
-    },
-    container: {
-        flex: 1,
-        padding: 24,
-        backgroundColor: '#dcf4f5',
-    },
-    formContainer: {
-        marginTop: 70
-    },
-    buttonContainer: {
-        marginTop: 80
-    },
-    text: {
-        fontSize: 17,
-        marginBottom: 10
-    },
-    textBox: {
-        height: 40,
-        borderWidth: 1,
-        borderRadius: 5,
-        paddingLeft: 10,
-        width: "100%",
-        backgroundColor: '#f5f7f7',
-        fontSize: 16
-    },
-    signUpBtn: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginHorizontal: 30,
-        backgroundColor: '#15b0b3',
-        borderRadius: 7,
-        marginBottom: 30
-    },
-    signup: {
-        justifyContent: "center",
-        marginTop: 40
-    },
-    button: {
-        marginBottom: 30,
-        backgroundColor: '#2196F3'
-    },
-    buttonText: {
-        textAlign: 'center',
-        color: 'white',
-        fontSize: 20,
-        paddingVertical: 10
-    },
-    error: {
-        marginTop: 25,
-        color: "red",
-        fontWeight: '500',
-        fontSize: 15
-    }
-});
+};
