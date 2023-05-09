@@ -80,6 +80,14 @@ export default class SettingsScreen extends Component {
                     </View>
 
                     <View>
+                        <TouchableOpacity>
+                            <View style={styles.settingButtons}>
+                                <Text style={styles.buttonText}>View Blocked List</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+
+                    <View>
                         <TouchableOpacity onPress={this.logout}>
                             <View style={styles.settingButtons}>
                                 <Text style={styles.buttonText}>Logout</Text>

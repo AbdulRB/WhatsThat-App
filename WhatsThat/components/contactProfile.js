@@ -132,6 +132,36 @@ export default class ContactProfileScreen extends Component {
             console.log(error);
           })
       };
+
+      blockContacts = async () => {
+        return fetch("http://localhost:3333/api/1.0.0/user/" + this.state.usersID+ "/block", {
+            method: 'POST',
+            headers: {
+                 "X-Authorization": await AsyncStorage.getItem("@session_token")
+            }
+        })
+        .then((response) => {
+            if(response.status === 200){
+              console.log("Contact blocked");
+              this.props.navigation.navigate("Contacts");
+            }
+            else if(response.status === 401){
+              this.props.navigation.navigate("Login");
+            }
+            else{
+              throw 'Something went wrong';
+            }
+          })
+          .then((response) => {
+            this.setState({
+              isLoading: false,
+              // listData: responseJson
+            })
+          })
+          .catch((error) => {
+            console.log(error);
+          })
+      };
     
     render(){
         return(
@@ -154,7 +184,7 @@ export default class ContactProfileScreen extends Component {
                         <Text style={styles.pictureBtnText}>Delete</Text>
                     </TouchableOpacity>
                     
-                    <TouchableOpacity style={styles.pictureBtn}>
+                    <TouchableOpacity style={styles.pictureBtn} onPress={this.blockContacts}>
                         <Text style={styles.pictureBtnText}>Block</Text>
                     </TouchableOpacity>                    
             </View>
