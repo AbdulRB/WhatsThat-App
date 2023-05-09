@@ -181,7 +181,61 @@ export default StyleSheet.create({
         padding: 1,
         backgroundColor: '#15b0b3',
         borderRadius: 7,
-        marginTop: 20
+        marginBottom: 0, 
+    },
+    contactDisplay: {
+        flexDirection: 'row',
+        textAlign: 'left',
+        backgroundColor: '#63adf7',
+        padding: 15,
+        borderRadius: 5,
+        marginBottom: 20,
+        // marginHorizontal: 0
+        alignContent: 'center',
+    },
+    addContainer: {
+        flexDirection: 'row',
+        flexBasis: 'auto',
+        marginTop: 20,
+        marginBottom: 20,
+    },
+    addTextBox: {
+        height: 40, 
+        borderWidth: 1, 
+        borderRadius: 5,
+        paddingLeft: 10,
+        width: "100%", 
+        backgroundColor: '#f5f7f7',
+        fontSize: 16
+    },
+    contactText: {
+        color: 'white',
+        fontWeight: 'bold',
+        fontSize: 18,
+        textTransform: 'capitalize',
+    },
+    contactContainer: {
+        margin: 15,
+    },
+    viewBtn: {
+        marginLeft: 50,
+        backgroundColor: '#8628eb',
+        borderRadius: 5,
+    },
+    viewTextBtn: {
+        textAlign: 'center',
+        color: 'white',
+        fontSize: 16,
+        paddingVertical: 10,
+        paddingHorizontal: 10
+    },
+    contactImageStyle: {
+        width: 200,
+        height: 200,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginHorizontal: 'auto',
+        marginBottom: 80
     },
 
 });
