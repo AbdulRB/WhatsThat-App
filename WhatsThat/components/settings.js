@@ -16,15 +16,19 @@ export default class SettingsScreen extends Component {
         // }
 
         this.logout = this.logout.bind(this)
-    }
+    };
 
     editProfileNavigate = () => {
-        this.props.navigation.navigate("Edit Profile")
-    }
+        this.props.navigation.navigate("Edit Profile");
+    };
 
     editProfilePictureNavigate = () => {
-        this.props.navigation.navigate("Edit Profile Picture")
-    }
+        this.props.navigation.navigate("Edit Profile Picture");
+    };
+
+    viewBlockedContactsNavigate = () => {
+        this.props.navigation.navigate("Blocked Contacts");
+    };
 
     async logout(){
         console.log("Logout")
@@ -80,7 +84,7 @@ export default class SettingsScreen extends Component {
                     </View>
 
                     <View>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={this.viewBlockedContactsNavigate}>
                             <View style={styles.settingButtons}>
                                 <Text style={styles.buttonText}>View Blocked List</Text>
                             </View>

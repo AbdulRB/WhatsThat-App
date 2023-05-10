@@ -63,7 +63,7 @@ export default class ChatScreen extends Component {
 
     render(){
 
-      if (this.state.isLoading){
+      if (!this.state.isLoading){
         return (
           <View style={styles.container}>
               <Text>This is the chat home screen</Text>

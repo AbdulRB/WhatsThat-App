@@ -17,6 +17,9 @@ import EditProfilePictureScreen from './components/editPicture';
 import UpdatePicture from './components/updatePicture';
 import HomeScreen from './components/homePage';
 import ContactProfileScreen from './components/contactProfile';
+import BlockedContactScreen from './components/blockedList';
+import BlockedProfileScreen from './components/blockedProfile';
+
 
 const AuthTab = createBottomTabNavigator();
 const AuthStack = createStackNavigator();
@@ -52,6 +55,8 @@ export default class App extends Component {
           <AuthStack.Screen name="Edit Profile Picture" component={EditProfilePictureScreen} />
           <AuthStack.Screen name="Update Picture" component={UpdatePicture} />
           <AuthStack.Screen name="Contact Profile" component={ContactProfileScreen} />
+          <AuthStack.Screen name="Blocked Contacts" component={BlockedContactScreen} />
+          <AuthStack.Screen name="Blocked Profile" component={BlockedProfileScreen} />
         </AuthStack.Navigator>
       </NavigationContainer>
     );

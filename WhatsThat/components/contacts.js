@@ -12,6 +12,7 @@ export default class ContactsScreen extends Component {
           isLoading: true,
           listData: [],
           addID: "",
+          error: "",
         }
 
         this.getContacts = this.getContacts.bind(this);
@@ -24,6 +25,7 @@ export default class ContactsScreen extends Component {
       this.unsubscribe = this.props.navigation.addListener('focus', () => {
           this.getContacts();
           this.displayContacts();
+          this.setState({ error: "" });
       });
     }
 
@@ -69,7 +71,20 @@ export default class ContactsScreen extends Component {
     }
 
     addContacts = async () => {
-      const currentUserId = await AsyncStorage.getItem('@user_id');
+      var hasNumber = /\d/; 
+      this.setState({ error: "" })
+
+      if (!(this.state.addID)) {
+          this.setState({ error: "Must enter a User ID" });
+          console.log(Number.isInteger(this.state.addID))
+          return;
+      }
+
+      if(!(hasNumber.test(this.state.addID))) {
+        this.setState({ error: "Must enter a valid User ID" })
+        return;
+      }
+      
 
       return fetch("http://localhost:3333/api/1.0.0/user/" + this.state.addID + "/contact", {
           method: 'POST',
@@ -79,8 +94,10 @@ export default class ContactsScreen extends Component {
       })
       .then((response) => {
           if(response.status === 200){
-            console.log("Contact added"); 
-            // return response.json();
+            console.log("Contact added");
+            this.getContacts();
+            this.displayContacts();
+            console.log(response.json());
           }
           else if(response.status === 401){
             this.props.navigation.navigate("Login");
@@ -143,7 +160,26 @@ export default class ContactsScreen extends Component {
               </TouchableOpacity>
             </View>
 
-            
+            <View style={styles.addContainer}>
+              <TextInput
+                style={styles.profileTextBox}
+                placeholder="ID"
+                onChangeText={addID => this.setState({ addID })}
+                defaultValue={this.state.addID}
+              />
+              <TouchableOpacity>
+                <View style={styles.addBtn}>
+                  <Text style={styles.buttonText}>Search</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+
+            <>
+              {this.state.error &&
+                <Text style={styles.error}>{this.state.error}</Text>
+              }
+            </>
+
             <View>
               <Text>{this.displayContacts()}</Text>
             </View>
