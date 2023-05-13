@@ -20,14 +20,13 @@ import ContactProfileScreen from './components/contactProfile';
 import BlockedContactScreen from './components/blockedList';
 import BlockedProfileScreen from './components/blockedProfile';
 
-
 const AuthTab = createBottomTabNavigator();
 const AuthStack = createStackNavigator();
 
 const MainTabNav = () => {
   return (
     <AuthTab.Navigator
-      initialRouteName='Contacts'
+      initialRouteName="Contacts"
       screenOptions={{headerShown: false}}>
       <AuthTab.Screen name="Chats" component={ChatScreen} />
       <AuthTab.Screen name="Contacts" component={ContactsScreen} />
@@ -45,7 +44,7 @@ export default class App extends Component {
     return (
       <NavigationContainer>
         <AuthStack.Navigator
-          initialRouteName="Tab Nav"
+          initialRouteName="Home"
           >
           <AuthStack.Screen name="Home" component={HomeScreen} options={{headerShown: false}} />
           <AuthStack.Screen name="Login" component={LoginScreen} />
