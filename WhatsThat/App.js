@@ -26,7 +26,7 @@ const AuthStack = createStackNavigator();
 const MainTabNav = () => {
   return (
     <AuthTab.Navigator
-      initialRouteName="Contacts"
+      initialRouteName="Chats"
       screenOptions={{headerShown: false}}>
       <AuthTab.Screen name="Chats" component={ChatScreen} />
       <AuthTab.Screen name="Contacts" component={ContactsScreen} />
@@ -44,7 +44,7 @@ export default class App extends Component {
     return (
       <NavigationContainer>
         <AuthStack.Navigator
-          initialRouteName="Home"
+          initialRouteName="Tab Nav"
           >
           <AuthStack.Screen name="Home" component={HomeScreen} options={{headerShown: false}} />
           <AuthStack.Screen name="Login" component={LoginScreen} />

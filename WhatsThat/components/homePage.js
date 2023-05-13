@@ -7,31 +7,31 @@ export default class HomeScreen extends Component {
 
     componentDidMount() {
         this.unsubscribe = this.props.navigation.addListener('focus', async () => {
-            await AsyncStorage.removeItem("@session_token");
-            await AsyncStorage.removeItem("@user_id");
-            await AsyncStorage.removeItem("currentPassword");
-            await AsyncStorage.removeItem("@blockedUserID");
-            await AsyncStorage.removeItem("@contactUserID");
+            // await AsyncStorage.removeItem("@session_token");
+            // await AsyncStorage.removeItem("@user_id");
+            // await AsyncStorage.removeItem("currentPassword");
+            // await AsyncStorage.removeItem("@blockedUserID");
+            // await AsyncStorage.removeItem("@contactUserID");
         });
       };
   
-      componentWillUnmount(){
+    componentWillUnmount(){
         this.unsubscribe();
-      }
+    };
     
     loginNavigate = () => {
-        this.props.navigation.navigate("Login")
-    }
+        this.props.navigation.navigate("Login");
+    };
 
     signUpNavigate = () => {
-        this.props.navigation.navigate("Sign Up")
-    }
+        this.props.navigation.navigate("Sign Up");
+    };
 
     render() {
         return (
             <View style={styles.container}>
                 <Text style={styles.homeTitle}>WhatsThat</Text>
-
+                
                 <TouchableOpacity onPress={this.loginNavigate}>
                     <View style={styles.homeLoginBtn}>
                         <Text style={styles.homeButtonText}>Login</Text>
@@ -43,10 +43,7 @@ export default class HomeScreen extends Component {
                         <Text style={styles.homeButtonText}>Sign Up</Text>
                     </View>
                 </TouchableOpacity>
-
             </View>
-
-
-        )
-    }
+        );
+    };
 };

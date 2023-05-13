@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, FlatList} from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, FlatList, ScrollView} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import styles from '../style';
 
@@ -40,9 +40,9 @@ export default class ContactsScreen extends Component {
     }
 
     getContacts = async () => {
-      const currentUserId = await AsyncStorage.getItem('@user_id');
+      // const currentUserId = await AsyncStorage.getItem('@user_id');
 
-      return fetch("http://localhost:3333/api/1.0.0/contacts/", {
+      return fetch("http://localhost:3333/api/1.0.0/contacts", {
           headers: {
                "X-Authorization": await AsyncStorage.getItem("@session_token")
           }
@@ -68,7 +68,7 @@ export default class ContactsScreen extends Component {
         .catch((error) => {
           console.log(error);
         })
-    }
+    };
 
     addContacts = async () => {
       var hasNumber = /\d/; 
@@ -85,7 +85,6 @@ export default class ContactsScreen extends Component {
         return;
       }
       
-
       return fetch("http://localhost:3333/api/1.0.0/user/" + this.state.addID + "/contact", {
           method: 'POST',
           headers: {
@@ -120,72 +119,86 @@ export default class ContactsScreen extends Component {
     displayContacts() {
       let contactData = this.state.listData;
 
-      return (
-        <View style={styles.contactContainer}>
-          {contactData.map((user, id) => {
-            return (
-              <View key={id} style={styles.contactDisplay}>
-                <Text style={styles.buttonText}>{user.first_name + " " + user.last_name}</Text>
-                
-                <TouchableOpacity onPress={() => {this.contactProfileNavigate(user.user_id);}}>
-                  <View style={styles.viewBtn}>
-                    <Text style={styles.viewTextBtn}>View Contact</Text>
+      if (contactData.length === 0) {
+        return (
+          <View>
+            <Text style={styles.text}>No Contacts Added</Text>
+          </View>
+        )
+      }
+      else {
+        return (
+          <View style={styles.contactContainer}>
+            {contactData.map((user, id) => {
+              return (
+                <View key={id} style={styles.contactDisplay}>
+                  <Text style={styles.buttonText}>{user.first_name + " " + user.last_name}</Text>
+                  
+                  <View style={styles.viewBtnContain}>
+                    <TouchableOpacity onPress={() => {this.contactProfileNavigate(user.user_id);}}>
+                      <View style={styles.viewBtn}>
+                        <Text style={styles.viewTextBtn}>View Contact</Text>
+                      </View>
+                    </TouchableOpacity>
                   </View>
-                </TouchableOpacity>
 
-              </View>
-            );
-          })}
-        </View>
-      )
+  
+                </View>
+              );
+            })}
+          </View>
+        )
+      }
     };
 
     render(){
 
       if (!this.state.isLoading){
-        return (          
-          <View style={styles.container}>
-            
-            <View style={styles.addContainer}>
-              <TextInput
-                style={styles.profileTextBox}
-                placeholder="ID"
-                onChangeText={addID => this.setState({ addID })}
-                defaultValue={this.state.addID}
-              />
-              <TouchableOpacity onPress={this.addContacts}>
-                <View style={styles.addBtn}>
-                  <Text style={styles.buttonText}>Add Contact</Text>
-                </View>
-              </TouchableOpacity>
+        return (
+          <ScrollView>
+            <View style={styles.container}>
+              
+              <View style={styles.addContainer}>
+                <TextInput
+                  style={styles.profileTextBox}
+                  placeholder="ID"
+                  onChangeText={addID => this.setState({ addID })}
+                  defaultValue={this.state.addID}
+                />
+                <TouchableOpacity onPress={this.addContacts}>
+                  <View style={styles.addBtn}>
+                    <Text style={styles.buttonText}>Add Contact</Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
+
+              <View style={styles.addContainer}>
+                <TextInput
+                  style={styles.profileTextBox}
+                  placeholder="ID"
+                  onChangeText={addID => this.setState({ addID })}
+                  defaultValue={this.state.addID}
+                />
+                <TouchableOpacity>
+                  <View style={styles.addBtn}>
+                    <Text style={styles.buttonText}>Search</Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
+
+              <>
+                {this.state.error &&
+                  <Text style={styles.error}>{this.state.error}</Text>
+                }
+              </>
+
+              <View>
+                <Text>{this.displayContacts()}</Text>
+              </View>
+
+
             </View>
-
-            <View style={styles.addContainer}>
-              <TextInput
-                style={styles.profileTextBox}
-                placeholder="ID"
-                onChangeText={addID => this.setState({ addID })}
-                defaultValue={this.state.addID}
-              />
-              <TouchableOpacity>
-                <View style={styles.addBtn}>
-                  <Text style={styles.buttonText}>Search</Text>
-                </View>
-              </TouchableOpacity>
-            </View>
-
-            <>
-              {this.state.error &&
-                <Text style={styles.error}>{this.state.error}</Text>
-              }
-            </>
-
-            <View>
-              <Text>{this.displayContacts()}</Text>
-            </View>
-
-
-          </View>
+          </ScrollView>        
         )
       }
     }

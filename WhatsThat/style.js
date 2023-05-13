@@ -215,12 +215,14 @@ export default StyleSheet.create({
         textTransform: 'capitalize',
     },
     contactContainer: {
-        margin: 15,
+        // margin: 15,
     },
     viewBtn: {
-        marginLeft: 50,
         backgroundColor: '#8628eb',
         borderRadius: 5,
+    },
+    viewBtnContain: {
+        marginLeft: 50,
     },
     viewTextBtn: {
         textAlign: 'center',
@@ -236,6 +238,16 @@ export default StyleSheet.create({
         justifyContent: 'center',
         marginHorizontal: 'auto',
         marginBottom: 80
+    },
+    chatNameDisplay: {
+        textAlign: 'left',
+        backgroundColor: '#63adf7',
+        padding: 15,
+        // borderRadius: 5,
+        marginBottom: 20,
+        // marginHorizontal: 0,
+        // width: '150%',
+        alignContent: 'center',
     },
 
 });
