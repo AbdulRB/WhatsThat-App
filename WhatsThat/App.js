@@ -19,6 +19,7 @@ import HomeScreen from './components/homePage';
 import ContactProfileScreen from './components/contactProfile';
 import BlockedContactScreen from './components/blockedList';
 import BlockedProfileScreen from './components/blockedProfile';
+import CreateChatScreen from './components/createChat';
 
 const AuthTab = createBottomTabNavigator();
 const AuthStack = createStackNavigator();
@@ -56,6 +57,7 @@ export default class App extends Component {
           <AuthStack.Screen name="Contact Profile" component={ContactProfileScreen} />
           <AuthStack.Screen name="Blocked Contacts" component={BlockedContactScreen} />
           <AuthStack.Screen name="Blocked Profile" component={BlockedProfileScreen} />
+          <AuthStack.Screen name="Create Chat" component={CreateChatScreen} />
         </AuthStack.Navigator>
       </NavigationContainer>
     );

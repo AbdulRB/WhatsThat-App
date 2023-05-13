@@ -20,40 +20,11 @@ export default class ChatScreen extends Component {
         this.getChats();
         // this.sendMessage();
       });
-    }
+    };
 
     componentWillUnmount() {
       this.unsubscribe();
-    }
-
-    // getData = async () => {
-    //   const value = await AsyncStorage.getItem('@session_token');
-    //   return fetch("http://localhost:3333/api/1.0.0/search", {
-    //     'headers': {
-    //       'X-Authorization': value
-    //     }
-    //   })
-    //   .then((response) => {
-    //     if(response.status === 200){
-    //       return response.json()
-    //     }
-    //     else if(response.status === 401){
-    //       this.props.navigation.navigate("Login");
-    //     }
-    //     else{
-    //       throw 'Something went wrong';
-    //     }
-    //   })
-    //   .then((responseJson) => {
-    //     this.setState({
-    //       isLoading: false,
-    //       listData: responseJson
-    //     })
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   })
-    // };
+    };
 
     getChats = async () => {
       // const currentUserId = await AsyncStorage.getItem('@user_id');
@@ -82,39 +53,6 @@ export default class ChatScreen extends Component {
           // console.log(responseJson)
       })
       .catch((error) => {
-          console.log(error);
-        })
-    };
-
-    addChat = async () => {
-      let to_send = {
-        name: "test"
-      }
-      
-      return fetch("http://localhost:3333/api/1.0.0/chat", {
-          method: 'POST',
-          headers: {
-               "X-Authorization": await AsyncStorage.getItem("@session_token"),
-               "Content-Type": "application/json"
-          },
-          body: JSON.stringify(to_send)
-      })
-      .then((response) => {
-          if(response.status === 201){
-            console.log("Chat added");
-            this.getChats();
-            this.displayChats();
-            // console.log(response.json());
-          }
-          else if(response.status === 401){
-            this.props.navigation.navigate("Login");
-          }
-          else{
-            //console.log(response);
-            throw 'Something went wrong';
-          }
-        })
-        .catch((error) => {
           console.log(error);
         })
     };
@@ -192,26 +130,37 @@ export default class ChatScreen extends Component {
       };
     };
 
+    createChatNavigate = () => {
+      this.props.navigation.navigate("Create Chat");
+  };
+
     render(){
         return (
-          <ScrollView>
           <View style={styles.container}>
-              <Text>This is the chat home screen</Text>
-
+              
               <View>
-                <Text>{this.displayChats()}</Text>
+                <TouchableOpacity onPress={this.createChatNavigate}>
+                  <View style={styles.settingButtons}>
+                    <Text style={styles.buttonText}>New Conservation</Text>
+                  </View>
+                </TouchableOpacity>
               </View>
 
-              <View>
+              <ScrollView>
+                <View>
+                  <Text>{this.displayChats()}</Text>
+                </View>
+              </ScrollView>
+
+
+              {/* <View>
                 <TouchableOpacity onPress={this.addChat}>
                   <View style={styles.signUpBtn}>
                     <Text style={styles.buttonText}>Add chat</Text>
                   </View>
                 </TouchableOpacity>
-              </View>
+              </View> */}
           </View>
-          </ScrollView>
-
         )
       };
 };

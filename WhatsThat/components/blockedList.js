@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, FlatList, Image} from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, FlatList, Image, ScrollView} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import styles from '../style';
 
@@ -105,10 +105,16 @@ export default class BlockedContactScreen extends Component {
 
     render(){
         return(
-
             <View style={styles.container}>
-              <Text>{this.displayContacts()}</Text>
+
+              <ScrollView>
+                <View>
+                  <Text>{this.displayContacts()}</Text>
+                </View>
+              </ScrollView>
+
             </View>
+
 
         )
     }

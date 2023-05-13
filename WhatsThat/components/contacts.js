@@ -155,7 +155,7 @@ export default class ContactsScreen extends Component {
 
       if (!this.state.isLoading){
         return (
-          <ScrollView>
+          // <ScrollView>
             <View style={styles.container}>
               
               <View style={styles.addContainer}>
@@ -191,14 +191,15 @@ export default class ContactsScreen extends Component {
                   <Text style={styles.error}>{this.state.error}</Text>
                 }
               </>
-
-              <View>
-                <Text>{this.displayContacts()}</Text>
-              </View>
-
+              
+              <ScrollView>
+                <View>
+                  <Text>{this.displayContacts()}</Text>
+                </View>
+              </ScrollView>
 
             </View>
-          </ScrollView>        
+          // </ScrollView>        
         )
       }
     }
