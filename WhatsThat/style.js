@@ -192,6 +192,8 @@ export default StyleSheet.create({
         marginBottom: 20,
         // marginHorizontal: 0
         alignContent: 'center',
+        alignSelf: 'center',
+        marginHorizontal: 10,
     },
     addContainer: {
         flexDirection: 'row',
@@ -215,6 +217,8 @@ export default StyleSheet.create({
         textTransform: 'capitalize',
     },
     contactContainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
         // margin: 15,
     },
     viewBtn: {
@@ -249,5 +253,82 @@ export default StyleSheet.create({
         // width: '150%',
         alignContent: 'center',
     },
-
+    messageDisplay: {
+        flexDirection: 'column-reverse',
+        textAlign: 'left',
+        backgroundColor: '#63adf7',
+        padding: 15,
+        borderRadius: 5,
+        marginBottom: 20,
+        // marginHorizontal: 0
+        alignContent: 'center',
+    },
+    messageNameDisplay: {
+        textAlign: 'left',
+        backgroundColor: '#63adf7',
+        padding: 15,
+        // borderRadius: 5,
+        marginBottom: 20,
+        // marginHorizontal: 0,
+        // width: '150%',
+        alignContent: 'center',
+    },
+    messageContain: {
+        paddingLeft: 200,
+    },
+    listContainer: {
+        // flexGrow: 1,
+        justifyContent: 'flex-end',
+        flexDirection: 'column-reverse',
+    },
+    messageContainer: {
+        backgroundColor: '#FFFFFF',
+        borderRadius: 8,
+        padding: 12,
+        marginBottom: 8,
+        maxWidth: '90%',
+    },
+    messageText: {
+        fontSize: 16
+    },
+    senderText: {
+        fontSize: 12,
+        color: '#999999',
+        marginTop: 4,
+        alignSelf: 'flex'
+    },
+    chatContainer: {
+        flex: 1,
+        // padding: 20,
+        backgroundColor: '#dcf4f5',
+    },
+    columnReverse: {
+        flexDirection: 'column-reverse',
+    },
+    contact: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        paddingVertical: 16,
+        width: '100%',
+        paddingHorizontal: 90,
+      },
+      contactInfo: {
+        flex: 1,
+        paddingRight: 16,
+      },
+      contactName: {
+        fontSize: 18,
+        fontWeight: 'bold',
+      },
+      contactEmail: {
+        fontSize: 16,
+        color: '#666',
+      },
+      newContainer: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingHorizontal: 16,
+      },
 });

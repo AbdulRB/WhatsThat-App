@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, FlatList, SafeAreaView, ScrollView} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import InvertibleScrollView from 'react-native-invertible-scroll-view';
 import styles from '../style';
 
 export default class ChatScreen extends Component {
@@ -16,8 +17,9 @@ export default class ChatScreen extends Component {
 
     componentDidMount() {
       this.unsubscribe = this.props.navigation.addListener('focus', () => {
-        this.checkLoggedIn();
+        // this.checkLoggedIn();
         this.getChats();
+        this.displayChats();
         // this.sendMessage();
       });
     };
@@ -59,10 +61,10 @@ export default class ChatScreen extends Component {
 
     sendMessage = async () => {
       let to_send = {
-        message: "this is a test message"
+        message: "this is the last message"
       }
       
-      return fetch("http://localhost:3333/api/1.0.0/chat/1/message", {
+      return fetch("http://localhost:3333/api/1.0.0/chat/2/message", {
           method: 'POST',
           headers: {
                "X-Authorization": await AsyncStorage.getItem("@session_token"),
@@ -90,6 +92,12 @@ export default class ChatScreen extends Component {
         })
     };
 
+    chatPageNavigate = async (currentChatID) => {
+      // console.log(storedUserID);
+      await AsyncStorage.setItem("@currentChatID", currentChatID);
+      this.props.navigation.navigate("Chat Page");
+    }
+
     displayChats() {
       let chatData = this.state.listData;
 
@@ -109,11 +117,11 @@ export default class ChatScreen extends Component {
                   <Text style={styles.text}>{chat.name}</Text>
                   <Text style={styles.text}>{chat.last_message.message}</Text>
                   
-                  {/* <TouchableOpacity onPress={() => {this.contactProfileNavigate(user.user_id);}}>
+                  <TouchableOpacity onPress={() => {this.chatPageNavigate(chat.chat_id);}}>
                     <View style={styles.viewBtn}>
-                      <Text style={styles.viewTextBtn}>View Contact</Text>
+                      <Text style={styles.viewTextBtn}>View Chat</Text>
                     </View>
-                  </TouchableOpacity> */}
+                  </TouchableOpacity>
   
                 </View>
               );
@@ -132,7 +140,7 @@ export default class ChatScreen extends Component {
 
     createChatNavigate = () => {
       this.props.navigation.navigate("Create Chat");
-  };
+    };
 
     render(){
         return (
@@ -141,7 +149,7 @@ export default class ChatScreen extends Component {
               <View>
                 <TouchableOpacity onPress={this.createChatNavigate}>
                   <View style={styles.settingButtons}>
-                    <Text style={styles.buttonText}>New Conservation</Text>
+                    <Text style={styles.buttonText}>New Conversation</Text>
                   </View>
                 </TouchableOpacity>
               </View>
@@ -152,14 +160,16 @@ export default class ChatScreen extends Component {
                 </View>
               </ScrollView>
 
+              {/* <InvertibleScrollView inverted
+              ref={ref => { this.scrollView = ref; }}
+              onContentSizeChange={() => {
+              this.scrollView.scrollTo({y: 0, animated: true});
+              }}>
+               <View>
+                  <Text>{this.displayChats()}</Text>
+                </View>
+              </InvertibleScrollView> */}
 
-              {/* <View>
-                <TouchableOpacity onPress={this.addChat}>
-                  <View style={styles.signUpBtn}>
-                    <Text style={styles.buttonText}>Add chat</Text>
-                  </View>
-                </TouchableOpacity>
-              </View> */}
           </View>
         )
       };

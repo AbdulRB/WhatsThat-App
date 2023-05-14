@@ -12,6 +12,8 @@ export default class HomeScreen extends Component {
             // await AsyncStorage.removeItem("currentPassword");
             // await AsyncStorage.removeItem("@blockedUserID");
             // await AsyncStorage.removeItem("@contactUserID");
+            const keys = await AsyncStorage.getAllKeys();
+            await AsyncStorage.multiRemove(keys);
         });
       };
   

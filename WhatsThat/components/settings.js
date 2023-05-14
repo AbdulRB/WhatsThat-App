@@ -41,20 +41,14 @@ export default class SettingsScreen extends Component {
         })
         .then(async (response) => {
             if(response.status === 200){
-                await AsyncStorage.removeItem("@session_token")
-                await AsyncStorage.removeItem("@user_id")
-                await AsyncStorage.removeItem("currentPassword")
-                await AsyncStorage.removeItem("@blockedUserID")
-                await AsyncStorage.removeItem("@contactUserID")
+                const keys = await AsyncStorage.getAllKeys();
+                await AsyncStorage.multiRemove(keys);
                 this.props.navigation.navigate("Login")
             }
             else if(response.status === 401){
                 console.log("Unauthorised")
-                await AsyncStorage.removeItem("@session_token")
-                await AsyncStorage.removeItem("@user_id")
-                await AsyncStorage.removeItem("currentPassword")
-                await AsyncStorage.removeItem("@blockedUserID")
-                await AsyncStorage.removeItem("@contactUserID")
+                const keys = await AsyncStorage.getAllKeys();
+                await AsyncStorage.multiRemove(keys);
                 this.props.navigation.navigate("Home")
             }
             else{
