@@ -22,6 +22,7 @@ import BlockedProfileScreen from './components/blockedProfile';
 import CreateChatScreen from './components/createChat';
 import ChatPageScreen from './components/chatPage';
 import ChatInfoScreen from './components/chatInformation';
+import EditMessageScreen from './components/editMessage';
 
 const AuthTab = createBottomTabNavigator();
 const AuthStack = createStackNavigator();
@@ -47,7 +48,7 @@ export default class App extends Component {
     return (
       <NavigationContainer>
         <AuthStack.Navigator
-          initialRouteName="Home"
+          initialRouteName="Tab Nav"
           >
           <AuthStack.Screen name="Home" component={HomeScreen} options={{headerShown: false}} />
           <AuthStack.Screen name="Login" component={LoginScreen} />
@@ -62,6 +63,7 @@ export default class App extends Component {
           <AuthStack.Screen name="Create Chat" component={CreateChatScreen} />
           <AuthStack.Screen name="Chat Page" component={ChatPageScreen} options={{headerShown: false}} />
           <AuthStack.Screen name="Chat Information" component={ChatInfoScreen} />
+          <AuthStack.Screen name="Edit Message" component={EditMessageScreen} />
         </AuthStack.Navigator>
       </NavigationContainer>
     );

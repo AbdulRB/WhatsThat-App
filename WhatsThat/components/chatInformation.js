@@ -24,9 +24,7 @@ export default class ChatInfoScreen extends Component {
       this.unsubscribe = this.props.navigation.addListener('focus', async () => {
         this.state.chatID = await AsyncStorage.getItem("@currentChatID");
         this.getChatInformation();
-
-
-        // this.state.currentUserID = await AsyncStorage.getItem("@user_id");
+        this.state.currentUserID = await AsyncStorage.getItem("@user_id");
         // this.displayChat();
         // this.checkLoggedIn();
         // this.getChats();
@@ -115,40 +113,48 @@ export default class ChatInfoScreen extends Component {
 
     displayChatMembers() {      
         let chatData = this.state.listData;
+        let currentUserID = this.state.currentUserID;
+        const myInt = parseInt(currentUserID);
 
-        return (
+        if (chatData.creator?.user_id === myInt) {
+           return (
             <View style={styles.contactContainer}>
               {chatData.members?.map((member, id) => {
                 return (
-                //   <View key={id} style={styles.contactDisplay}>
-                //     <Text style={styles.buttonText}>{member.first_name + " " + member.last_name}</Text>
-                    
-                //     <View style={styles.viewBtnContain}>
-                //       <TouchableOpacity onPress={() => {}}>
-                //         <View style={styles.viewBtn}>
-                //           <Text style={styles.viewTextBtn}>Remove</Text>
-                //         </View>
-                //       </TouchableOpacity>
-                //     </View>
-
-                //   </View>
                 <ScrollView  key={id}>
-                <TouchableOpacity style={styles.contact}>
-                <View style={styles.contactInfo}>
-                  <Text style={styles.contactName}>{member.first_name + " " + member.last_name}</Text>
-                  <Text style={styles.contactEmail}>{member.email}</Text>
-                </View>
-                <TouchableOpacity>
-                  <Icon name="close" color="#FF0000" />
-                </TouchableOpacity>
-              </TouchableOpacity>
+                    <TouchableOpacity style={styles.contact}>
+                    <View style={styles.contactInfo}>
+                    <Text style={styles.contactName}>{member.first_name + " " + member.last_name}</Text>
+                    <Text style={styles.contactEmail}>{member.email}</Text>
+                    </View>
+                        <TouchableOpacity onPress={() => this.removeMember(member.user_id)}>
+                        <Icon name="close" color="#FF0000" />
+                        </TouchableOpacity>
+                    </TouchableOpacity>
                 </ScrollView>
-
-
                 );
               })}
             </View>
           )
+          }
+          else {
+        return (
+            <View style={styles.contactContainer}>
+              {chatData.members?.map((member, id) => {
+                return (
+                <ScrollView  key={id}>
+                    <TouchableOpacity style={styles.contact}>
+                    <View style={styles.contactInfo}>
+                    <Text style={styles.contactName}>{member.first_name + " " + member.last_name}</Text>
+                    <Text style={styles.contactEmail}>{member.email}</Text>
+                    </View>
+                    </TouchableOpacity>
+                </ScrollView>
+                );
+              })}
+            </View>
+          )
+          };  
     }; 
 
 
@@ -196,6 +202,47 @@ export default class ChatInfoScreen extends Component {
           .catch((error) => {
             console.log(error);
           })
+      };
+
+      removeMember = async (removeID) => {
+        this.setState({ error: "" })
+        
+        return fetch("http://localhost:3333/api/1.0.0/chat/" + this.state.chatID + "/user/" + removeID, {
+            method: 'DELETE',
+            headers: {
+                 "X-Authorization": await AsyncStorage.getItem("@session_token")
+            }
+        })
+        .then((response) => {
+            if(response.status === 200){
+              console.log("Member removed from chat");
+              if (removeID !== this.state.currentUserID) {
+                this.getChatInformation();
+                this.displayChatMembers();
+              }
+            //   console.log(response.json());
+            }
+            else if(response.status === 401){
+              this.props.navigation.navigate("Login");
+            }
+            else{
+              throw 'Something went wrong';
+            }
+          })
+          .then((response) => {
+            this.setState({
+            //   isLoading: false,
+              // listData: responseJson
+            })
+          })
+          .catch((error) => {
+            console.log(error);
+          })
+      };
+
+      removeSelf = async (removeID) => {
+        this.removeMember(removeID);
+        this.props.navigation.navigate("Chats");
       };
 
 
@@ -251,7 +298,7 @@ export default class ChatInfoScreen extends Component {
               </View>
 
             <View style={styles.signup}>
-                <TouchableOpacity onPress={this.Leave}>
+                <TouchableOpacity onPress={() => this.removeSelf(this.state.currentUserID)}>
                     <View style={styles.applyBtn}>
                         <Text style={styles.buttonText}>Leave Group</Text>
                     </View>

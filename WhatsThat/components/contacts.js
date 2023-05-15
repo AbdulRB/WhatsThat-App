@@ -34,7 +34,7 @@ export default class ContactsScreen extends Component {
     }
     
     contactProfileNavigate = async (storedUserID) => {
-      console.log(storedUserID);
+      // console.log(storedUserID);
       await AsyncStorage.setItem("@contactUserID", storedUserID);
       this.props.navigation.navigate("Contact Profile");
     }

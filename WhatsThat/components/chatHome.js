@@ -59,39 +59,6 @@ export default class ChatScreen extends Component {
         })
     };
 
-    sendMessage = async () => {
-      let to_send = {
-        message: "this is the last message"
-      }
-      
-      return fetch("http://localhost:3333/api/1.0.0/chat/2/message", {
-          method: 'POST',
-          headers: {
-               "X-Authorization": await AsyncStorage.getItem("@session_token"),
-               "Content-Type": "application/json"
-          },
-          body: JSON.stringify(to_send)
-      })
-      .then((response) => {
-          if(response.status === 200){
-            console.log("Message Sent");
-            this.getChats();
-            this.displayChats();
-            // console.log(response.json());
-          }
-          else if(response.status === 401){
-            this.props.navigation.navigate("Login");
-          }
-          else{
-            //console.log(response);
-            throw 'Something went wrong';
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        })
-    };
-
     chatPageNavigate = async (currentChatID) => {
       // console.log(storedUserID);
       await AsyncStorage.setItem("@currentChatID", currentChatID);

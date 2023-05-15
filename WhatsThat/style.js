@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { ScreenHeight } from 'react-native-elements/dist/helpers';
 
 export default StyleSheet.create({
     container: {
@@ -326,9 +327,60 @@ export default StyleSheet.create({
         color: '#666',
       },
       newContainer: {
-        flex: 1,
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
         alignItems: 'center',
-        justifyContent: 'center',
-        paddingHorizontal: 16,
+        backgroundColor: '#FFFFFF',
+        paddingVertical: 10,
+        paddingHorizontal: 20,
       },
+      footer: {
+        // position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        height: 80,
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingHorizontal: 10,
+        borderTopWidth: 1,
+        borderTopColor: '#ccc',
+        backgroundColor: '#f9f9f9',
+        marginTop: 20,
+
+      },
+      messageInput: {
+        flex: 1,
+        height: 40,
+        borderColor: '#ccc',
+        borderWidth: 1,
+        borderRadius: 20,
+        paddingHorizontal: 10,
+        marginRight: 10,
+      },
+      sendButton: {
+        backgroundColor: '#007AFF',
+        borderRadius: 20,
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+      },
+      sendButtonText: {
+        color: '#fff',
+        fontWeight: 'bold',
+      },
+      content: {
+        flexDirection: 'column-reverse',
+        height: 673, // set a fixed height for the content area
+        // flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        
+      },
+    //   scrollView: {
+    //     flexGrow: 1,
+    //   },
 });
