@@ -257,7 +257,7 @@ export default StyleSheet.create({
     messageDisplay: {
         flexDirection: 'column-reverse',
         textAlign: 'left',
-        backgroundColor: '#63adf7',
+        backgroundColor: '#a5f0d2',
         padding: 15,
         borderRadius: 5,
         marginBottom: 20,
@@ -268,35 +268,44 @@ export default StyleSheet.create({
         textAlign: 'left',
         backgroundColor: '#63adf7',
         padding: 15,
-        // borderRadius: 5,
         marginBottom: 20,
-        // marginHorizontal: 0,
-        // width: '150%',
         alignContent: 'center',
     },
-    messageContain: {
+    sendMessageContain: {
         paddingLeft: 200,
+    },
+    recieveMessageContain: {
+        paddingRight: 200,
     },
     listContainer: {
         // flexGrow: 1,
         justifyContent: 'flex-end',
         flexDirection: 'column-reverse',
     },
-    messageContainer: {
+    recieveMessageContainer: {
         backgroundColor: '#FFFFFF',
         borderRadius: 8,
-        padding: 12,
+        padding: 10,
         marginBottom: 8,
-        maxWidth: '90%',
+        width: 180,
+    },
+    sendMessageContainer: {
+        backgroundColor: '#a5f0d2',
+        borderRadius: 8,
+        padding: 10,
+        marginBottom: 8,
+        width: 180,
     },
     messageText: {
-        fontSize: 16
+        fontSize: 16,
+        color: 'black',
     },
     senderText: {
         fontSize: 12,
-        color: '#999999',
+        color: '#8b8f8d',
         marginTop: 4,
-        alignSelf: 'flex'
+        alignSelf: 'flex',
+        
     },
     chatContainer: {
         flex: 1,
@@ -311,12 +320,16 @@ export default StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         paddingVertical: 16,
-        width: '100%',
-        paddingHorizontal: 90,
+        width: 345,
+        paddingHorizontal: 10,
+        backgroundColor: 'white',
+        marginBottom: 10,
+        borderRadius: 7,
       },
       contactInfo: {
         flex: 1,
         paddingRight: 16,
+        marginLeft: 10,
       },
       contactName: {
         fontSize: 18,
@@ -374,13 +387,73 @@ export default StyleSheet.create({
       },
       content: {
         flexDirection: 'column-reverse',
-        height: 673, // set a fixed height for the content area
-        // flex: 1,
+        height: 673,
         justifyContent: 'center',
-        alignItems: 'center',
-        
+        alignItems: 'center',        
       },
-    //   scrollView: {
-    //     flexGrow: 1,
-    //   },
+    addIDContainer: {
+        flexDirection: 'row',
+        marginBottom: 20,
+        marginLeft: 8,
+        // flexBasis: 'auto',
+        // marginBottom: 0,
+        // marginLeft: 20,
+    },
+    addIDBtn: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginHorizontal: 20,
+        backgroundColor: '#15b0b3',
+        borderRadius: 7,
+        marginBottom: 0, 
+        paddingHorizontal: 20,
+    },
+    addIDTextBox: {
+        height: 40, 
+        borderWidth: 1, 
+        borderRadius: 5,
+        paddingLeft: 10,
+        width: "100%", 
+        backgroundColor: '#f5f7f7',
+        fontSize: 16
+    },
+    addIDButtonText: {
+        textAlign: 'center',
+        color: 'white',
+        fontSize: 16,
+        paddingVertical: 10
+    },
+    searchIDContainer: {
+        flexDirection: 'row',
+        marginBottom: 20,
+        marginLeft: 8,
+        // flexBasis: 'auto',
+        // marginBottom: 0,
+        // marginLeft: 20,
+    },
+    searchIDBtn: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginHorizontal: 20,
+        backgroundColor: '#15b0b3',
+        borderRadius: 7,
+        marginBottom: 0, 
+        paddingHorizontal: 20,
+    },
+    searchIDTextBox: {
+        height: 40, 
+        borderWidth: 1, 
+        borderRadius: 5,
+        paddingLeft: 10,
+        width: "100%", 
+        backgroundColor: '#f5f7f7',
+        fontSize: 16
+    },
+    searchIDButtonText: {
+        textAlign: 'center',
+        color: 'white',
+        fontSize: 16,
+        paddingVertical: 10
+    },
+
 });

@@ -36,7 +36,6 @@ export default class ChatInfoScreen extends Component {
       this.unsubscribe();
     };
 
-
     getChatInformation = async () => {
         return fetch("http://localhost:3333/api/1.0.0/chat/" + this.state.chatID, {
             headers: {
@@ -123,13 +122,13 @@ export default class ChatInfoScreen extends Component {
                 return (
                 <ScrollView  key={id}>
                     <TouchableOpacity style={styles.contact}>
-                    <View style={styles.contactInfo}>
-                    <Text style={styles.contactName}>{member.first_name + " " + member.last_name}</Text>
-                    <Text style={styles.contactEmail}>{member.email}</Text>
-                    </View>
-                        <TouchableOpacity onPress={() => this.removeMember(member.user_id)}>
-                        <Icon name="close" color="#FF0000" />
-                        </TouchableOpacity>
+                      <View style={styles.contactInfo}>
+                      <Text style={styles.contactName}>{member.first_name + " " + member.last_name}</Text>
+                      <Text style={styles.contactEmail}>{member.email}</Text>
+                      </View>
+                          <TouchableOpacity onPress={() => this.removeMember(member.user_id)}>
+                            <Icon name="close" color="#FF0000" />
+                          </TouchableOpacity>
                     </TouchableOpacity>
                 </ScrollView>
                 );
@@ -142,7 +141,7 @@ export default class ChatInfoScreen extends Component {
             <View style={styles.contactContainer}>
               {chatData.members?.map((member, id) => {
                 return (
-                <ScrollView  key={id}>
+                <ScrollView  key={id} showsVerticalScrollIndicator={false}>
                     <TouchableOpacity style={styles.contact}>
                     <View style={styles.contactInfo}>
                     <Text style={styles.contactName}>{member.first_name + " " + member.last_name}</Text>

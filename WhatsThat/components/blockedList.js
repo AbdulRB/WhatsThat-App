@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, FlatList, Image, ScrollView} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Header, Icon } from 'react-native-elements';
 import styles from '../style';
 
 export default class BlockedContactScreen extends Component {
@@ -85,16 +86,28 @@ export default class BlockedContactScreen extends Component {
             <View style={styles.contactContainer}>
               {blockedData.map((user, id) => {
                 return (
-                  <View key={id} style={styles.contactDisplay}>
-                    <Text style={styles.buttonText}>{user.first_name + " " + user.last_name}</Text>
+                  // <View key={id} style={styles.contactDisplay}>
+                  //   <Text style={styles.buttonText}>{user.first_name + " " + user.last_name}</Text>
                     
-                    <TouchableOpacity onPress={() => {this.blockedProfileNavigate(user.user_id);}}>
-                      <View style={styles.viewBtn}>
-                        <Text style={styles.viewTextBtn}>View Contact</Text>
-                      </View>
-                    </TouchableOpacity>
+                  //   <TouchableOpacity onPress={() => {this.blockedProfileNavigate(user.user_id);}}>
+                  //     <View style={styles.viewBtn}>
+                  //       <Text style={styles.viewTextBtn}>View Contact</Text>
+                  //     </View>
+                  //   </TouchableOpacity>
   
-                  </View>
+                  // </View>
+
+                  <View key={id}>
+                  <TouchableOpacity style={styles.contact}>
+                    <View style={styles.contactInfo}>
+                      <Text style={styles.contactName}>{user.first_name + " " + user.last_name}</Text>
+                      <Text style={styles.contactEmail}>{user.email}</Text>
+                    </View>
+                        <TouchableOpacity onPress={() => {this.blockedProfileNavigate(user.user_id);}}>
+                          <Icon name="arrow-forward-ios" color="black" />
+                        </TouchableOpacity>
+                  </TouchableOpacity>
+                </View>
                 );
               })}
             </View>

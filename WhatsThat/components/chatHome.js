@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, FlatList, SafeAreaView, ScrollView} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import InvertibleScrollView from 'react-native-invertible-scroll-view';
+import { Header, Icon } from 'react-native-elements';
 import styles from '../style';
 
 export default class ChatScreen extends Component {
@@ -18,14 +19,22 @@ export default class ChatScreen extends Component {
     componentDidMount() {
       this.unsubscribe = this.props.navigation.addListener('focus', () => {
         // this.checkLoggedIn();
-        this.getChats();
-        this.displayChats();
+        // this.getChats();
+        // this.displayChats();
         // this.sendMessage();
       });
+      this.getChats();
+      this.displayChats();
+      this.interval = setInterval(() => {
+        this.getChats();
+        this.displayChats();
+      }, 5000);
     };
 
     componentWillUnmount() {
+      clearInterval(this.interval);
       this.unsubscribe();
+      
     };
 
     getChats = async () => {
@@ -80,17 +89,29 @@ export default class ChatScreen extends Component {
           <View >
             {chatData.map((chat, id) => {
               return (
-                <View key={id} style={styles.chatNameDisplay}>
-                  <Text style={styles.text}>{chat.name}</Text>
-                  <Text style={styles.text}>{chat.last_message.message}</Text>
+                // <View key={id} style={styles.chatNameDisplay}>
+                //   <Text style={styles.text}>{chat.name}</Text>
+                //   <Text style={styles.text}>{chat.last_message.message}</Text>
                   
-                  <TouchableOpacity onPress={() => {this.chatPageNavigate(chat.chat_id);}}>
-                    <View style={styles.viewBtn}>
-                      <Text style={styles.viewTextBtn}>View Chat</Text>
-                    </View>
-                  </TouchableOpacity>
+                //   <TouchableOpacity onPress={() => {this.chatPageNavigate(chat.chat_id);}}>
+                //     <View style={styles.viewBtn}>
+                //       <Text style={styles.viewTextBtn}>View Chat</Text>
+                //     </View>
+                //   </TouchableOpacity>
   
-                </View>
+                // </View>
+
+                <View key={id}>
+                <TouchableOpacity style={styles.contact} onPress={() => {this.chatPageNavigate(chat.chat_id);}}>
+                  <View style={styles.contactInfo}>
+                    <Text style={styles.contactName}>{chat.name}</Text>
+                    <Text style={styles.contactEmail}>{chat.last_message.message}</Text>
+                  </View>
+                      <TouchableOpacity onPress={() => {this.chatPageNavigate(chat.chat_id);}}>
+                        <Icon name="arrow-forward-ios" color="black" />
+                      </TouchableOpacity>
+                </TouchableOpacity>
+              </View>
               );
             })}
           </View>
@@ -121,7 +142,7 @@ export default class ChatScreen extends Component {
                 </TouchableOpacity>
               </View>
 
-              <ScrollView>
+              <ScrollView showsVerticalScrollIndicator={false}>
                 <View>
                   <Text>{this.displayChats()}</Text>
                 </View>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, FlatList, ScrollView} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Header, Icon } from 'react-native-elements';
 import styles from '../style';
 
 export default class ContactsScreen extends Component {
@@ -13,6 +14,7 @@ export default class ContactsScreen extends Component {
           listData: [],
           addID: "",
           error: "",
+          search: "",
         }
 
         this.getContacts = this.getContacts.bind(this);
@@ -26,6 +28,7 @@ export default class ContactsScreen extends Component {
           this.getContacts();
           this.displayContacts();
           this.setState({ error: "" });
+          this.setState({search: "", addID: ""})
       });
     }
 
@@ -76,7 +79,7 @@ export default class ContactsScreen extends Component {
 
       if (!(this.state.addID)) {
           this.setState({ error: "Must enter a User ID" });
-          console.log(Number.isInteger(this.state.addID))
+          // console.log(Number.isInteger(this.state.addID));
           return;
       }
 
@@ -131,18 +134,28 @@ export default class ContactsScreen extends Component {
           <View style={styles.contactContainer}>
             {contactData.map((user, id) => {
               return (
-                <View key={id} style={styles.contactDisplay}>
-                  <Text style={styles.buttonText}>{user.first_name + " " + user.last_name}</Text>
+                // <View key={id} style={styles.contactDisplay}>
+                //   <Text style={styles.buttonText}>{user.first_name + " " + user.last_name}</Text>
+                //   <Text style={styles.buttonText}>{user.email}</Text>
                   
-                  <View style={styles.viewBtnContain}>
-                    <TouchableOpacity onPress={() => {this.contactProfileNavigate(user.user_id);}}>
-                      <View style={styles.viewBtn}>
-                        <Text style={styles.viewTextBtn}>View Contact</Text>
-                      </View>
-                    </TouchableOpacity>
-                  </View>
-
-  
+                //   <View style={styles.viewBtnContain}>
+                //     <TouchableOpacity onPress={() => {this.contactProfileNavigate(user.user_id);}}>
+                //       <View style={styles.viewBtn}>
+                //         <Text style={styles.viewTextBtn}>View Contact</Text>
+                //       </View>
+                //     </TouchableOpacity>
+                //   </View>
+                // </View>
+                <View key={id}>
+                  <TouchableOpacity style={styles.contact}>
+                    <View style={styles.contactInfo}>
+                      <Text style={styles.contactName}>{user.first_name + " " + user.last_name}</Text>
+                      <Text style={styles.contactEmail}>{user.email}</Text>
+                    </View>
+                        <TouchableOpacity onPress={() => {this.contactProfileNavigate(user.user_id);}}>
+                          <Icon name="arrow-forward-ios" color="black" />
+                        </TouchableOpacity>
+                  </TouchableOpacity>
                 </View>
               );
             })}
@@ -157,42 +170,46 @@ export default class ContactsScreen extends Component {
         return (
           // <ScrollView>
             <View style={styles.container}>
-              
-              <View style={styles.addContainer}>
+
+              <View style={styles.addIDContainer}>
                 <TextInput
-                  style={styles.profileTextBox}
-                  placeholder="ID"
+                  style={styles.addIDTextBox}
+                  placeholder="Enter a User ID..."
                   onChangeText={addID => this.setState({ addID })}
                   defaultValue={this.state.addID}
                 />
-                <TouchableOpacity onPress={this.addContacts}>
-                  <View style={styles.addBtn}>
-                    <Text style={styles.buttonText}>Add Contact</Text>
-                  </View>
-                </TouchableOpacity>
+                <View>
+                  <TouchableOpacity onPress={this.addContacts}>
+                    <View style={styles.addIDBtn}>
+                      <Text style={styles.addIDButtonText}>Add Contact</Text>
+                    </View>
+                  </TouchableOpacity>
+                </View>
               </View>
 
-              <View style={styles.addContainer}>
+              <View style={styles.searchIDContainer}>
                 <TextInput
-                  style={styles.profileTextBox}
-                  placeholder="ID"
-                  onChangeText={addID => this.setState({ addID })}
-                  defaultValue={this.state.addID}
+                  style={styles.searchIDTextBox}
+                  placeholder="Search by Name, Email, ID..."
+                  onChangeText={search => this.setState({ search })}
+                  defaultValue={this.state.search}
                 />
-                <TouchableOpacity>
-                  <View style={styles.addBtn}>
-                    <Text style={styles.buttonText}>Search</Text>
-                  </View>
-                </TouchableOpacity>
+                <View>
+                  <TouchableOpacity>
+                    <View style={styles.searchIDBtn}>
+                      <Text style={styles.searchIDButtonText}>Search</Text>
+                    </View>
+                  </TouchableOpacity>
+                </View>
               </View>
 
-              <>
+              {/* <>
                 {this.state.error &&
                   <Text style={styles.error}>{this.state.error}</Text>
                 }
-              </>
+              </> */}
               
-              <ScrollView>
+              <ScrollView showsVerticalScrollIndicator={false}> 
                 <View>
                   <Text>{this.displayContacts()}</Text>
                 </View>

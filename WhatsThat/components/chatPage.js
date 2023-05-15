@@ -41,7 +41,6 @@ export default class ChatPageScreen extends Component {
     componentWillUnmount() {
       this.unsubscribe();
       clearInterval(this.interval);
-      console.log("Hello");
     };
 
     getChat = async () => {
@@ -92,9 +91,6 @@ export default class ChatPageScreen extends Component {
         let currentUserID = this.state.currentUserID;
         const myInt = parseInt(currentUserID);
 
-        // console.log(typeof chatArray);
-        // console.log(Array.isArray(chatArray)); // true
-
         if (Array.isArray(chatArray)) {
           const chatList = chatArray.reverse();
         };
@@ -113,10 +109,10 @@ export default class ChatPageScreen extends Component {
                 {chatData.messages?.map((message, id) => {
                   if (message.author?.user_id === myInt) {
                     return (
-                      <View key={id} style={styles.messageContain}>
+                      <View key={id} style={styles.sendMessageContain}>
                         <View>
                           <TouchableOpacity onPress={() => {this.editMessageNavigate(message.message_id, message.message);}}>
-                            <View style={styles.messageContainer}>
+                            <View style={styles.sendMessageContainer}>
                               <Text style={styles.senderText}>{message.author?.first_name} {message.author?.last_name}</Text>
                               <Text style={styles.messageText}>{message.message}</Text>
                               <Text style={styles.senderText}>{this.setTime(message.timestamp)}</Text>                                 
@@ -128,9 +124,9 @@ export default class ChatPageScreen extends Component {
                   }
                   else {
                     return (
-                      <View key={id}>
-                        <View style={styles.messageContainer}>
-                          <Text style={styles.senderText}>{message.author?.first_name} s {message.author?.last_name}</Text>
+                      <View key={id} style={styles.recieveMessageContain}>
+                        <View style={styles.recieveMessageContainer}>
+                          <Text style={styles.senderText}>{message.author?.first_name} {message.author?.last_name}</Text>
                           <Text style={styles.messageText}>{message.message}</Text>
                           <Text style={styles.senderText}>{this.setTime(message.timestamp)}</Text> 
                         </View>
@@ -165,9 +161,7 @@ export default class ChatPageScreen extends Component {
             console.log("Message Sent");
             this.getChat();
             this.displayChat();
-            // this.setState({message: ""})
             this.message.current.value = "";
-            // console.log(response.json());
           }
           else if(response.status === 401){
             this.props.navigation.navigate("Login");
@@ -215,7 +209,8 @@ export default class ChatPageScreen extends Component {
               <View style={styles.content}>
                   <ScrollView
                     ref={ref => {this.scrollView = ref}}
-                    onContentSizeChange={() => this.scrollView.scrollToEnd({animated: false})}>
+                    onContentSizeChange={() => this.scrollView.scrollToEnd({animated: false})}
+                    showsVerticalScrollIndicator={false}>
                   <View >
                     <Text>{this.displayChat()}</Text>
                   </View>
