@@ -57,6 +57,9 @@ export default class ChatPageScreen extends Component {
             else if(response.status === 401){
               this.props.navigation.navigate("Login");
             }
+            else if(response.status === 404){
+              this.props.navigation.navigate("Chats");
+            }
             else{
               throw 'Something went wrong';
             }
