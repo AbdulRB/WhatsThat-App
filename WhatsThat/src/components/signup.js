@@ -88,7 +88,13 @@ export default class SignUpScreen extends Component {
         })
         .then((responseJson) => {
             console.log("User created with ID: ", responseJson)
-            this.setState({"submitted": false});
+            this.setState({"submitted": false,
+            "first_name": "",
+            "last_name": "",
+            "email": "",
+            "password": "",
+            "confirmPassword": ""
+        });
             this.props.navigation.navigate("Login")
         })
         .catch((error) => {
@@ -108,7 +114,7 @@ export default class SignUpScreen extends Component {
                             style={styles.signupTextBox}
                             placeholder="Enter first name..."
                             onChangeText={first_name => this.setState({first_name})}
-                            defaultValue={this.state.first_name}
+                            value={this.state.first_name}
                         />
                     </View>
 
@@ -118,7 +124,7 @@ export default class SignUpScreen extends Component {
                             style={styles.signupTextBox}
                             placeholder="Enter surname..."
                             onChangeText={last_name => this.setState({last_name})}
-                            defaultValue={this.state.last_name}
+                            value={this.state.last_name}
                         />
                     </View>
                     
@@ -129,7 +135,7 @@ export default class SignUpScreen extends Component {
                             style={styles.signupTextBox}
                             placeholder="Enter email..."
                             onChangeText={email => this.setState({email})}
-                            defaultValue={this.state.email}
+                            value={this.state.email}
                         />
                     </View>
             
@@ -139,7 +145,7 @@ export default class SignUpScreen extends Component {
                             style={styles.signupTextBox}
                             placeholder="Enter password..."
                             onChangeText={password => this.setState({password})}
-                            defaultValue={this.state.password}
+                            value={this.state.password}
                             secureTextEntry
                         />
                     </View>
@@ -150,7 +156,7 @@ export default class SignUpScreen extends Component {
                             style={styles.signupTextBox}
                             placeholder="Re-enter password..."
                             onChangeText={confirmPassword => this.setState({confirmPassword})}
-                            defaultValue={this.state.confirmPassword}
+                            value={this.state.confirmPassword}
                             secureTextEntry
                         />
                     </View>

@@ -68,7 +68,7 @@ export default class LoginScreen extends Component {
                     const encodePassword = Base64.encode(this.state.password);
                     AsyncStorage.setItem("currentPassword", encodePassword);
 
-                    this.setState({ "submitted": false });
+                    this.setState({ "submitted": false, "password": "", "email": "" });
 
                     this.props.navigation.navigate("Tab Nav");
                 }
@@ -96,7 +96,7 @@ export default class LoginScreen extends Component {
                             style={styles.loginTextBox}
                             placeholder="Enter email..."
                             onChangeText={email => this.setState({ email })}
-                            defaultValue={this.state.email}
+                            value={this.state.email}
                         />
                     </View>
 
@@ -106,7 +106,7 @@ export default class LoginScreen extends Component {
                             style={styles.loginTextBox}
                             placeholder="Enter password..."
                             onChangeText={password => this.setState({ password })}
-                            defaultValue={this.state.password}
+                            value={this.state.password}
                             secureTextEntry
                         />
                     </View>
