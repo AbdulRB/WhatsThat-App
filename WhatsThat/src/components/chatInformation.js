@@ -99,7 +99,6 @@ export default class ChatInfoScreen extends Component {
         .then(() => {
             console.log("Current chat name updated")
             this.setState({"success": "Chat name updated"})
-            // this.setState({"submitted": false});
         })
         .catch((error) => {
             this.setState({"error": error})

@@ -130,7 +130,6 @@ export default class ContactsScreen extends Component {
             console.log("Contact added");
             this.getContacts();
             this.displayContacts();
-            console.log(response.text());
           }
           else if(response.status === 401){
             this.props.navigation.navigate("Login");
