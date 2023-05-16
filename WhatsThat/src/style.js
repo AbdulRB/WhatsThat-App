@@ -1,5 +1,4 @@
 import { StyleSheet } from 'react-native';
-import { ScreenHeight } from 'react-native-elements/dist/helpers';
 
 export default StyleSheet.create({
     container: {
@@ -198,7 +197,6 @@ export default StyleSheet.create({
         padding: 15,
         borderRadius: 5,
         marginBottom: 20,
-        // marginHorizontal: 0
         alignContent: 'center',
         alignSelf: 'center',
         marginHorizontal: 10,
@@ -227,7 +225,6 @@ export default StyleSheet.create({
     contactContainer: {
         justifyContent: 'center',
         alignItems: 'center',
-        // margin: 15,
     },
     viewBtn: {
         backgroundColor: '#8628eb',
@@ -255,10 +252,7 @@ export default StyleSheet.create({
         textAlign: 'left',
         backgroundColor: '#63adf7',
         padding: 15,
-        // borderRadius: 5,
         marginBottom: 20,
-        // marginHorizontal: 0,
-        // width: '150%',
         alignContent: 'center',
     },
     messageDisplay: {
@@ -268,7 +262,6 @@ export default StyleSheet.create({
         padding: 15,
         borderRadius: 5,
         marginBottom: 20,
-        // marginHorizontal: 0
         alignContent: 'center',
     },
     messageNameDisplay: {
@@ -285,7 +278,6 @@ export default StyleSheet.create({
         paddingRight: 200,
     },
     listContainer: {
-        // flexGrow: 1,
         justifyContent: 'flex-end',
         flexDirection: 'column-reverse',
     },
@@ -316,7 +308,6 @@ export default StyleSheet.create({
     },
     chatContainer: {
         flex: 1,
-        // padding: 20,
         backgroundColor: '#dcf4f5',
     },
     columnReverse: {
@@ -359,7 +350,6 @@ export default StyleSheet.create({
         paddingHorizontal: 20,
       },
       footer: {
-        // position: 'absolute',
         bottom: 0,
         left: 0,
         right: 0,
@@ -402,9 +392,6 @@ export default StyleSheet.create({
         flexDirection: 'row',
         marginBottom: 20,
         marginLeft: 8,
-        // flexBasis: 'auto',
-        // marginBottom: 0,
-        // marginLeft: 20,
     },
     addIDBtn: {
         alignItems: 'center',
@@ -434,9 +421,6 @@ export default StyleSheet.create({
         flexDirection: 'row',
         marginBottom: 20,
         marginLeft: 8,
-        // flexBasis: 'auto',
-        // marginBottom: 0,
-        // marginLeft: 20,
     },
     searchIDBtn: {
         alignItems: 'center',
@@ -494,22 +478,15 @@ export default StyleSheet.create({
         flex: 1,
         padding: 24,
         backgroundColor: '#dcf4f5',
-        // height: 787,
     },
     chatContactContainer: {
-        // justifyContent: 'center',
-        // alignItems: 'center',
         height: 250,
         marginBottom: 30,
-        // paddin
     },
     addIDChatContainer: {
         flexDirection: 'row',
         marginVertical: 20,
         marginLeft: 8,
-        // flexBasis: 'auto',
-        // marginBottom: 0,
-        // marginLeft: 20,
     },
 
 });

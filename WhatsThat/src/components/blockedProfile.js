@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, FlatList, Image} from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Image} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import styles from '../style';
 
@@ -30,7 +30,7 @@ export default class BlockedProfileScreen extends Component {
 
     componentWillUnmount(){
       this.unsubscribe();
-    }
+    };
 
     getProfilePicture = async () => {
         return fetch('http://localhost:3333/api/1.0.0/user/'+ this.state.usersID + '/photo', {
@@ -124,7 +124,7 @@ export default class BlockedProfileScreen extends Component {
                     </View>
             </View>
           )
-    }
+    };
 
     unblockContacts = async () => {
         return fetch("http://localhost:3333/api/1.0.0/user/" + this.state.usersID+ "/block", {
@@ -148,7 +148,6 @@ export default class BlockedProfileScreen extends Component {
           .then((response) => {
             this.setState({
               isLoading: false,
-              // listData: responseJson
             })
           })
           .catch((error) => {
@@ -178,5 +177,5 @@ export default class BlockedProfileScreen extends Component {
                     </TouchableOpacity>
             </View>
         )
-    }
+    };
 };

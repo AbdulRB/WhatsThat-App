@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Base64 } from 'js-base64';
 import styles from '../style';
-
 import * as EmailValidator from 'email-validator';
 
 export default class LoginScreen extends Component {
@@ -20,7 +19,7 @@ export default class LoginScreen extends Component {
         }
 
         this.login = this.login.bind(this)
-    }
+    };
 
     login = async () => {
         this.setState({ submitted: true })
@@ -62,13 +61,11 @@ export default class LoginScreen extends Component {
                 }
             })
             .then(async (responseJson) => {
-                //console.log(responseJson)
                 try {
                     await AsyncStorage.setItem("@user_id", responseJson.id);
                     await AsyncStorage.setItem("@session_token", responseJson.token);
                     
                     const encodePassword = Base64.encode(this.state.password);
-                    // const hashedPassword = bcrypt.hashSync(this.state.password, 10)
                     AsyncStorage.setItem("currentPassword", encodePassword);
 
                     this.setState({ "submitted": false });
@@ -83,12 +80,11 @@ export default class LoginScreen extends Component {
             .catch((error) => {
                 console.log(error)
             })
-
-    }
+    };
 
     signUpNavigate = () => {
         this.props.navigation.navigate("Sign Up")
-    }
+    };
 
     render() {
         return (
@@ -145,5 +141,5 @@ export default class LoginScreen extends Component {
                 </View>
             </View>
         )
-    }
+    };
 };

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, FlatList, SafeAreaView, ScrollView} from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, ScrollView} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Header, Icon } from 'react-native-elements';
+import { Icon } from 'react-native-elements';
 import styles from '../style';
 
 export default class ChatInfoScreen extends Component {
@@ -28,10 +28,6 @@ export default class ChatInfoScreen extends Component {
         this.state.chatID = await AsyncStorage.getItem("@currentChatID");
         this.getChatInformation();
         this.state.currentUserID = await AsyncStorage.getItem("@user_id");
-        // this.displayChat();
-        // this.checkLoggedIn();
-        // this.getChats();
-        // this.sendMessage();
       });
     };
 
@@ -76,13 +72,11 @@ export default class ChatInfoScreen extends Component {
         if(this.state.chatName === ""){
             this.setState({error: "Must enter a new value for name"});
             return;
-        }
+        };
 
         let to_send = {
             name: this.state.chatName,
-        }
-
-        // let to_send = this.setUserInformation.to_send;
+        };
 
         return fetch("http://localhost:3333/api/1.0.0/chat/" + this.state.chatID, {
             method: 'PATCH',
@@ -94,8 +88,6 @@ export default class ChatInfoScreen extends Component {
         })
         .then((response) => {
             if(response.status === 200){
-                // return response.json()
-                // this.getUserInformation();
             }
             else if(response.status === 400){
                 throw "Invalid name, please try again";
@@ -111,9 +103,8 @@ export default class ChatInfoScreen extends Component {
         })
         .catch((error) => {
             this.setState({"error": error})
-            // this.setState({"submitted": false});
         })
-    }
+    };
 
     displayChatMembers() {      
         let chatData = this.state.listData;
@@ -163,21 +154,6 @@ export default class ChatInfoScreen extends Component {
           };  
     }; 
 
-    // checkRemove = (deleteID) => {
-    //   const testInt = parseInt(this.state.creatorID);
-
-    //   console.log(testInt);
-    //   console.log(deleteID);
-
-    //   if (deleteID === testInt) {
-    //     this.removeSelf(deleteID);
-    //   }
-    //   else {
-    //     this.removeMember(deleteID);
-    //   }
-
-    // }
-
     addMember = async () => {
         var hasNumber = /\d/; 
         this.setState({ addError: "" });
@@ -187,12 +163,12 @@ export default class ChatInfoScreen extends Component {
         if (!(this.state.addMemberID)) {
             this.setState({ addError: "Must enter a User ID" });
             return;
-        }
+        };
   
         if(!(hasNumber.test(this.state.addMemberID))) {
           this.setState({ addError: "Must enter a valid User ID" })
           return;
-        }
+        };
         
         return fetch("http://localhost:3333/api/1.0.0/chat/" + this.state.chatID + "/user/" + this.state.addMemberID, {
             method: 'POST',
@@ -206,7 +182,6 @@ export default class ChatInfoScreen extends Component {
               console.log("Member added to chat");
               this.getChatInformation();
               this.displayChatMembers();
-            //   console.log(response.json());
             }
             else if(response.status === 400 || response.status === 404){
               this.setState({addError: "Contact already added or does not exist"});
@@ -217,12 +192,6 @@ export default class ChatInfoScreen extends Component {
             else{
               throw 'Something went wrong';
             }
-          })
-          .then((response) => {
-            this.setState({
-            //   isLoading: false,
-              // listData: responseJson
-            })
           })
           .catch((error) => {
             console.log(error);
@@ -245,7 +214,6 @@ export default class ChatInfoScreen extends Component {
                 this.getChatInformation();
                 this.displayChatMembers();
               }
-            //   console.log(response.json());
             }
             else if(response.status === 401){
               this.props.navigation.navigate("Login");
@@ -253,12 +221,6 @@ export default class ChatInfoScreen extends Component {
             else{
               throw 'Something went wrong';
             }
-          })
-          .then((response) => {
-            this.setState({
-            //   isLoading: false,
-              // listData: responseJson
-            })
           })
           .catch((error) => {
             console.log(error);
@@ -340,7 +302,6 @@ export default class ChatInfoScreen extends Component {
                     </View>
                 </TouchableOpacity>
             </View>
-
 
           </View>
         )

@@ -1,28 +1,26 @@
 import React, { Component } from 'react';
 import 'react-native-gesture-handler';
-import { StatusBar } from 'expo-status-bar';
-import { Settings, StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 // import Ionicons from 'react-native-vector-icons/Ionicons';  
 
-import LoginScreen from './components/login';
-import SignUpScreen from './components/signup';
-import ChatScreen from './components/chatHome';
-import SettingsScreen from './components/settings';
-import ContactsScreen from './components/contacts';
-import EditProfileScreen from './components/editProfile';
-import EditProfilePictureScreen from './components/editPicture';
-import UpdatePicture from './components/updatePicture';
-import HomeScreen from './components/homePage';
-import ContactProfileScreen from './components/contactProfile';
-import BlockedContactScreen from './components/blockedList';
-import BlockedProfileScreen from './components/blockedProfile';
-import CreateChatScreen from './components/createChat';
-import ChatPageScreen from './components/chatPage';
-import ChatInfoScreen from './components/chatInformation';
-import EditMessageScreen from './components/editMessage';
+import LoginScreen from './src/components/login'
+import SignUpScreen from './src/components/signup';
+import ChatScreen from './src/components/chatHome';
+import SettingsScreen from './src/components/settings';
+import ContactsScreen from './src/components/contacts';
+import EditProfileScreen from './src/components/editProfile';
+import EditProfilePictureScreen from './src/components/editPicture';
+import UpdatePicture from './src/components/updatePicture';
+import HomeScreen from './src/components/homePage';
+import ContactProfileScreen from './src/components/contactProfile';
+import BlockedContactScreen from './src/components/blockedList';
+import BlockedProfileScreen from './src/components/blockedProfile';
+import CreateChatScreen from './src/components/createChat';
+import ChatPageScreen from './src/components/chatPage';
+import ChatInfoScreen from './src/components/chatInformation';
+import EditMessageScreen from './src/components/editMessage';
 
 const AuthTab = createBottomTabNavigator();
 const AuthStack = createStackNavigator();

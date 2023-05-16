@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, FlatList, Image} from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Image} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import styles from '../style';
 
@@ -148,7 +148,6 @@ export default class ContactProfileScreen extends Component {
           .then((response) => {
             this.setState({
               isLoading: false,
-              // listData: responseJson
             })
           })
           .catch((error) => {
@@ -178,7 +177,6 @@ export default class ContactProfileScreen extends Component {
           .then((response) => {
             this.setState({
               isLoading: false,
-              // listData: responseJson
             })
           })
           .catch((error) => {

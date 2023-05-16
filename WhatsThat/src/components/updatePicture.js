@@ -1,14 +1,11 @@
-import React, { Component } from 'react';
-import { Camera, CameraType, onCameraReady, CameraPictureOptions } from 'expo-camera';
+import React from 'react';
+import { Camera, CameraType } from 'expo-camera';
 import { useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import styles from '../style';
 
 export default function UpdatePicture({navigation}) {
-    // function editPictureNavigate(){
-    //     this.props.navigation.navigate("Edit Profile Picture")
-    // }
     
     const [type, setType] = useState(CameraType.back);
     const [permission, requestPermission] = Camera.useCameraPermissions();
@@ -19,14 +16,14 @@ export default function UpdatePicture({navigation}) {
     function toggleCameraType(){
         setType(current => (current === CameraType.back ? CameraType.front : CameraType.back));
         console.log("Camera: ", type)
-    }
+    };
 
     async function takePhoto(){
         if(camera){
             const options = {quality: 0.5, base64: true, onPictureSaved: (data) => sendToServer(data)}
             const data = await camera.takePictureAsync(options)
         }
-    }
+    };
 
     async function sendToServer(data){
         let currentUserId = await AsyncStorage.getItem('@user_id');
@@ -56,8 +53,7 @@ export default function UpdatePicture({navigation}) {
         .catch((err) => {
             console.log(err)
         })
-
-    }
+    };
 
     if(!permission || !permission.granted){
         return(<Text>Camera permission denied</Text>)
@@ -82,5 +78,5 @@ export default function UpdatePicture({navigation}) {
                 </Camera>
             </View>
         )
-    }
+    };
 };

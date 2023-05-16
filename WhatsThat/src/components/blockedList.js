@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, FlatList, Image, ScrollView} from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Header, Icon } from 'react-native-elements';
+import { Icon } from 'react-native-elements';
 import styles from '../style';
 
 export default class BlockedContactScreen extends Component {
@@ -37,7 +37,6 @@ export default class BlockedContactScreen extends Component {
     };
 
     blockedProfileNavigate = async (blockProfileID) => {
-        // console.log("Navigate to blocked page");
         await AsyncStorage.setItem("@blockedUserID", blockProfileID);
         this.props.navigation.navigate("Blocked Profile");
     };
@@ -69,7 +68,7 @@ export default class BlockedContactScreen extends Component {
           .catch((error) => {
             console.log(error);
           })
-      }
+      };
 
       displayContacts() {
         let blockedData = this.state.listData;
@@ -119,5 +118,5 @@ export default class BlockedContactScreen extends Component {
 
 
         )
-    }
+    };
 };

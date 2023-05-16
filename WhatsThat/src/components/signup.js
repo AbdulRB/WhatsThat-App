@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import styles from '../style';
 import * as EmailValidator from 'email-validator';
-
-import LoginScreen from './login';
 
 export default class SignUpScreen extends Component {
 
@@ -25,40 +23,40 @@ export default class SignUpScreen extends Component {
     }
 
     signup = () => {
-        this.setState({submitted: true})
-        this.setState({error: ""})
+        this.setState({submitted: true});
+        this.setState({error: ""});
 
         if(!(this.state.first_name && this.state.last_name && this.state.email && this.state.password && this.state.confirmPassword)){
             this.setState({error: "Must enter required fields, please try again..."})
             return;
-        }
+        };
 
         const NAME_REGEX = new RegExp("^[a-zA-Z\s]*$")
         if(!NAME_REGEX.test(this.state.first_name)){
             this.setState({error: "Invalid first name, please try again..."})
             return;
-        }
+        };
 
         if(!NAME_REGEX.test(this.state.last_name)){
             this.setState({error: "Invalid surname, please try again..."})
             return;
-        }
+        };
 
         if(!EmailValidator.validate(this.state.email)){
             this.setState({error: "Invalid email, please try again..."})
             return;
-        }
+        };
 
         const PASSWORD_REGEX = new RegExp("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$")
         if(!PASSWORD_REGEX.test(this.state.password)){
             this.setState({error: "Password isn't strong enough (One upper, one lower, one special, one number, at least 8 characters long)"})
             return;
-        }
+        };
 
         if(this.state.password !== this.state.confirmPassword){
             this.setState({error: "Passwords do not match, please try again..."})
             return;
-        }
+        };
 
 
         let to_send = {
@@ -66,7 +64,7 @@ export default class SignUpScreen extends Component {
             last_name: this.state.last_name,
             email: this.state.email,
             password: this.state.password,
-        }
+        };
 
         return fetch("http://localhost:3333/api/1.0.0/user", {
             method: 'post',
@@ -90,7 +88,6 @@ export default class SignUpScreen extends Component {
         })
         .then((responseJson) => {
             console.log("User created with ID: ", responseJson)
-            // this.setState({"error": "User added successfully"})
             this.setState({"submitted": false});
             this.props.navigation.navigate("Login")
         })
@@ -98,7 +95,7 @@ export default class SignUpScreen extends Component {
             this.setState({"error": error});
             this.setState({"submitted": false});
         })
-    }
+    };
 
     render(){
         return (
@@ -180,5 +177,5 @@ export default class SignUpScreen extends Component {
                 </View>
             </View>
         )
-    }
+    };
 };

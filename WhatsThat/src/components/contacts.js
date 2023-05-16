@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, FlatList, ScrollView} from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, ScrollView} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Header, Icon } from 'react-native-elements';
+import { Icon } from 'react-native-elements';
 import styles from '../style';
 
 export default class ContactsScreen extends Component {
@@ -23,7 +23,7 @@ export default class ContactsScreen extends Component {
         this.displayContacts = this.displayContacts.bind(this);
         this.addContacts = this.addContacts.bind(this);
         this.contactProfileNavigate = this.contactProfileNavigate.bind(this);
-    }
+    };
 
     componentDidMount() {
       this.unsubscribe = this.props.navigation.addListener('focus', () => {
@@ -32,17 +32,16 @@ export default class ContactsScreen extends Component {
           this.setState({ error: "" });
           this.setState({search: "", addID: ""})
       });
-    }
+    };
 
     componentWillUnmount(){
       this.unsubscribe();
-    }
+    };
     
     contactProfileNavigate = async (storedUserID) => {
-      // console.log(storedUserID);
       await AsyncStorage.setItem("@contactUserID", storedUserID);
       this.props.navigation.navigate("Contact Profile");
-    }
+    };
 
     searchContacts = async () => {
       if (this.state.search === "") {
@@ -147,7 +146,6 @@ export default class ContactsScreen extends Component {
         .then((response) => {
           this.setState({
             isLoading: false,
-            // listData: responseJson
           })
         })
         .catch((error) => {
@@ -192,12 +190,7 @@ export default class ContactsScreen extends Component {
       let searchData = this.state.searchedContacts;
 
       if (searchData.length === 0) {
-        return
-        //   <View>
-        //     <Text style={styles.emptyTitle}>No Contacts Found</Text>
-        //   </View>
-        // )
-
+        return;
       }
       else {
         return (
@@ -225,7 +218,7 @@ export default class ContactsScreen extends Component {
     handleSearchText = (text) => {
       this.setState({"search": text});
       this.searchContacts();
-    }
+    };
 
     render(){
         return (
@@ -276,10 +269,7 @@ export default class ContactsScreen extends Component {
             </ScrollView>
               )}
 
-
-              
-
             </View>      
         )
-    }
+    };
 };

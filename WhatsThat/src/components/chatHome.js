@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, FlatList, SafeAreaView, ScrollView} from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import InvertibleScrollView from 'react-native-invertible-scroll-view';
-import { Header, Icon } from 'react-native-elements';
+import { Icon } from 'react-native-elements';
 import styles from '../style';
 
 export default class ChatScreen extends Component {
@@ -14,7 +13,7 @@ export default class ChatScreen extends Component {
           isLoading: true,
           listData: []
         }
-    }
+    };
 
     componentDidMount() {
       this.unsubscribe = this.props.navigation.addListener('focus', () => {
@@ -71,7 +70,7 @@ export default class ChatScreen extends Component {
       // console.log(storedUserID);
       await AsyncStorage.setItem("@currentChatID", currentChatID);
       this.props.navigation.navigate("Chat Page");
-    }
+    };
 
     displayChats() {
       let chatData = this.state.listData;
@@ -134,17 +133,7 @@ export default class ChatScreen extends Component {
                   <Text>{this.displayChats()}</Text>
                 </View>
               </ScrollView>
-
-              {/* <InvertibleScrollView inverted
-              ref={ref => { this.scrollView = ref; }}
-              onContentSizeChange={() => {
-              this.scrollView.scrollTo({y: 0, animated: true});
-              }}>
-               <View>
-                  <Text>{this.displayChats()}</Text>
-                </View>
-              </InvertibleScrollView> */}
-
+              
           </View>
         )
       };

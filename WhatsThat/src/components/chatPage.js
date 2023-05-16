@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, FlatList, SafeAreaView, ScrollView} from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, ScrollView} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Header, Icon } from 'react-native-elements';
-import InvertibleScrollView from 'react-native-invertible-scroll-view';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import styles from '../style';
 
 export default class ChatPageScreen extends Component {
@@ -16,7 +14,6 @@ export default class ChatPageScreen extends Component {
           listData: {},
           chatID: "",
           currentUserID: "",
-          // message: "",
         }
 
         this.message = React.createRef();
@@ -24,7 +21,6 @@ export default class ChatPageScreen extends Component {
 
     async componentDidMount() {
       this.unsubscribe = this.props.navigation.addListener('focus', async () => {
-        // this.checkLoggedIn();
       });
 
       this.state.chatID = await AsyncStorage.getItem("@currentChatID");
@@ -66,7 +62,6 @@ export default class ChatPageScreen extends Component {
           })
           .then((responseJson) => {
             this.setState({
-            //   isLoading: false,
               listData: responseJson
             })
           })
@@ -81,7 +76,6 @@ export default class ChatPageScreen extends Component {
     };
 
     editMessageNavigate = async (messageID, currentMessage) => {
-      // console.log(storedUserID);
       await AsyncStorage.setItem("@messageID", messageID);
       await AsyncStorage.setItem("@currentMessage", currentMessage);
       this.props.navigation.navigate("Edit Message");
@@ -170,7 +164,6 @@ export default class ChatPageScreen extends Component {
             this.props.navigation.navigate("Login");
           }
           else{
-            //console.log(response);
             throw 'Something went wrong';
           }
         })
@@ -180,7 +173,6 @@ export default class ChatPageScreen extends Component {
     };
 
     handleTextChange = (text) => {
-      // console.log('Text changed:', text);
       this.message.current.value = text;
     }
 
@@ -224,10 +216,8 @@ export default class ChatPageScreen extends Component {
                 <TextInput
                   style={styles.messageInput}
                   placeholder="Type a message..."
-                  // value={this.message.current.value}
                   ref={this.message}
                   onChangeText={this.handleTextChange}
-                  // defaultValue={this.state.message}
                 />
                 <TouchableOpacity style={styles.sendButton} onPress={this.sendMessage}>
                   <Text style={styles.sendButtonText}>Send</Text>

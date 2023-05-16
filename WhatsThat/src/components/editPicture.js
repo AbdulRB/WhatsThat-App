@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, FlatList } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Image } from 'react-native';
 import styles from '../style';
@@ -16,7 +16,7 @@ export default class EditPictureScreen extends Component {
             isLoading: true,
             photo: ""
         }
-    }
+    };
 
     componentDidMount() {
         this.unsubscribe = this.props.navigation.addListener('focus', () => {
@@ -24,19 +24,19 @@ export default class EditPictureScreen extends Component {
             console.log("triggered");
             this.getProfilePicture();
         });
-      }
+    };
 
     componentWillUnmount(){
         this.unsubscribe();
-    }
+    };
 
     cameraScreenNavigate = () => {
         this.props.navigation.navigate("Update Picture")
-    }
+    };
 
     reloadNavigation = () => {
         this.componentDidMount
-    }
+    };
 
     getProfilePicture = async () => {
         let currentUserId = await AsyncStorage.getItem('@user_id');
@@ -65,7 +65,7 @@ export default class EditPictureScreen extends Component {
         .catch((err) => {
             console.log(err)
         })
-    }
+    };
 
     render() {
         return (
@@ -104,5 +104,5 @@ export default class EditPictureScreen extends Component {
                 </View>
             </View>
         )
-    }
+    };
 };

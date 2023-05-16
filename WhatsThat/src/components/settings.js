@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import styles from '../style';
 
@@ -7,13 +7,6 @@ export default class SettingsScreen extends Component {
 
     constructor(props){
         super(props);
-
-        // this.state = {
-        //     email: "",
-        //     password: "",
-        //     error: "", 
-        //     submitted: false
-        // }
 
         this.logout = this.logout.bind(this)
     };
@@ -59,7 +52,7 @@ export default class SettingsScreen extends Component {
             this.setState({"error": error})
             this.setState({"submitted": false});
         })
-    }
+    };
 
     render(){
         return (
@@ -101,5 +94,5 @@ export default class SettingsScreen extends Component {
                 </View>
             </View>
         )
-    }
+    };
 };

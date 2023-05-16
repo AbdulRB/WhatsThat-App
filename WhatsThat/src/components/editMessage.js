@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, FlatList, SafeAreaView, ScrollView} from 'react-native';
+import { View, Text, TextInput, TouchableOpacity} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Header, Icon } from 'react-native-elements';
 import styles from '../style';
 
 export default class EditMessageScreen extends Component {
@@ -20,14 +19,10 @@ export default class EditMessageScreen extends Component {
           message: "",
           success: "",
         }
-    }
+    };
 
     async componentDidMount() {
       this.unsubscribe = this.props.navigation.addListener('focus', async () => {
-        // this.displayChat();
-        // this.checkLoggedIn();
-        // this.getChats();
-        // this.sendMessage();
       });
 
       this.state.chatID = await AsyncStorage.getItem("@currentChatID");
@@ -84,8 +79,6 @@ export default class EditMessageScreen extends Component {
             message: this.state.message,
         }
 
-        // let to_send = this.setUserInformation.to_send;
-
         return fetch("http://localhost:3333/api/1.0.0/chat/" + this.state.chatID + "/message/" + this.state.messageID, {
             method: 'PATCH',
             headers: {
@@ -96,8 +89,6 @@ export default class EditMessageScreen extends Component {
         })
         .then((response) => {
             if(response.status === 200){
-                // return response.json()
-                // this.getUserInformation();
             }
             else if(response.status === 400){
                 throw "Invalid name, please try again";
@@ -109,17 +100,15 @@ export default class EditMessageScreen extends Component {
         .then(() => {
             console.log("Message updated")
             this.setState({"success": "Message updated"})
-            // this.setState({"submitted": false});
         })
         .catch((error) => {
             this.setState({"error": error})
-            // this.setState({"submitted": false});
         })
-    }
+    };
 
     navigateTest() {
       this.props.navigation.navigate("Chat Page");
-    }
+    };
 
     removeMessage = async () => {
         this.setState({ error: "" })
@@ -134,7 +123,6 @@ export default class EditMessageScreen extends Component {
             if(response.status === 200){
               console.log("Message removed from chat");
               this.navigateTest();
-            //   console.log(response.json());
             }
             else if(response.status === 401){
               this.props.navigation.navigate("Login");

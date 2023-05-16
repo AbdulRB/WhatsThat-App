@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, FlatList } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as EmailValidator from 'email-validator';
 import { Base64 } from 'js-base64';
@@ -27,16 +27,11 @@ export default class EditProfileScreen extends Component {
             isLoading: true,
             listData: {}
         }
-    }
+    };
 
     componentDidMount() {
-        // this.unsubscribe = this.props.navigation.addListener('focus', () => {
-        //   this.checkLoggedIn();
-        // });
-  
         this.getUserInformation();
-        // this.setDetails();
-      }
+      };
 
     getUserInformation = async () => {
         const currentUserId = await AsyncStorage.getItem('@user_id');
@@ -48,7 +43,6 @@ export default class EditProfileScreen extends Component {
         })
         .then((response) => {
             if(response.status === 200){
-            //   console.log(currentUserId)
               return response.json()
             }
             else if(response.status === 401){
@@ -67,7 +61,7 @@ export default class EditProfileScreen extends Component {
           .catch((error) => {
             console.log(error);
           })
-    }
+    };
 
     updateUserInformation = async () => {
         this.setState({submitted: true})
@@ -136,7 +130,6 @@ export default class EditProfileScreen extends Component {
             password: currentPassword,
         }
         const currentUserId = await AsyncStorage.getItem('@user_id');
-        // let to_send = this.setUserInformation.to_send;
 
         return fetch("http://localhost:3333/api/1.0.0/user/" + currentUserId, {
             method: 'PATCH',
@@ -148,7 +141,6 @@ export default class EditProfileScreen extends Component {
         })
         .then((response) => {
             if(response.status === 200){
-                // return response.json()
                 this.getUserInformation();
             }
             else if(response.status === 400){
@@ -160,7 +152,6 @@ export default class EditProfileScreen extends Component {
         })
         .then(() => {
             console.log("Current user details updated")
-            // this.setState({"error": "User details updated"})
             this.setState({"success": "User details updated"});
             this.setState({"submitted": false});
         })
@@ -168,7 +159,7 @@ export default class EditProfileScreen extends Component {
             this.setState({"error": error})
             this.setState({"submitted": false});
         })
-    }
+    };
 
     render() {
         return (
@@ -250,5 +241,5 @@ export default class EditProfileScreen extends Component {
                 </View>
             </View>
         )
-    }
+    };
 };

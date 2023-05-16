@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import styles from '../style';
 
@@ -39,9 +39,6 @@ export default class CreateChatScreen extends Component {
             if(response.status === 201){
               console.log("Chat added");
               this.props.navigation.navigate("Chats");
-            //   this.getChats();
-            //   this.displayChats();
-              // console.log(response.json());
             }
             else if(response.status === 401){
               this.props.navigation.navigate("Login");
@@ -88,5 +85,5 @@ export default class CreateChatScreen extends Component {
                 </View>
             </View>
         )
-    }
+    };
 };
