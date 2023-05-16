@@ -91,14 +91,37 @@ export default class BlockedProfileScreen extends Component {
         this.state.first_name = this.state.listData.first_name;
         this.state.last_name = this.state.listData.last_name;
         this.state.email = this.state.listData.email;
-
+        const defaultValue = this.state.first_name && this.state.last_name ? `${this.state.first_name} ${this.state.last_name}` : '';
+        
         return (
-            <View style={styles.contactContainer}>
-                  <View>
-                    <Text style={styles.text}>Name: {this.state.first_name + " " + this.state.last_name}</Text>
-                    <Text style={styles.text}>Email: {this.state.email}</Text>
-                    <Text style={styles.text}>ID: {this.state.usersID}</Text>
-                  </View>
+            <View style={styles.container}>
+                    <View style={styles.first_name}>
+                        <Text style={styles.text}>Name:</Text>
+                        <TextInput
+                            style={styles.profileTextBox}
+                            defaultValue={defaultValue}
+                            editable={false}
+                        />
+                    </View>
+                    
+                    <View style={styles.last_name}>
+                        <Text style={styles.text}>Email:</Text>
+                        <TextInput
+                            style={styles.profileTextBox}
+                            defaultValue={this.state.email}
+                            editable={false}
+                        />
+                    </View>
+
+
+                    <View style={styles.email}>
+                        <Text style={styles.text}>ID:</Text>
+                        <TextInput
+                            style={styles.profileTextBox}
+                            defaultValue={this.state.usersID}
+                            editable={false}
+                        />
+                    </View>
             </View>
           )
     }
@@ -136,7 +159,7 @@ export default class BlockedProfileScreen extends Component {
     render(){
         return(
             <View style={styles.container}>
-                <>
+                    <>
                         {this.state.error &&
                             <Text style={styles.error}>{this.state.error}</Text>
                         }
@@ -149,10 +172,10 @@ export default class BlockedProfileScreen extends Component {
                     />
 
                     <Text>{this.displayContacts()}</Text>
-                    
+
                     <TouchableOpacity style={styles.pictureBtn} onPress={this.unblockContacts}>
                         <Text style={styles.pictureBtnText}>Unblock</Text>
-                    </TouchableOpacity>                    
+                    </TouchableOpacity>
             </View>
         )
     }

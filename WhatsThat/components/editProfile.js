@@ -21,7 +21,8 @@ export default class EditProfileScreen extends Component {
             password: "",
             confirmPassword: "",
 
-            error: "", 
+            error: "",
+            success: "",
             submitted: false,
             isLoading: true,
             listData: {}
@@ -159,7 +160,8 @@ export default class EditProfileScreen extends Component {
         })
         .then(() => {
             console.log("Current user details updated")
-            this.setState({"error": "User details updated"})
+            // this.setState({"error": "User details updated"})
+            this.setState({"success": "User details updated"});
             this.setState({"submitted": false});
         })
         .catch((error) => {
@@ -229,6 +231,12 @@ export default class EditProfileScreen extends Component {
                     <>
                         {this.state.error &&
                             <Text style={styles.error}>{this.state.error}</Text>
+                        }
+                    </>
+
+                    <>
+                        {this.state.success &&
+                            <Text style={styles.success}>{this.state.success}</Text>
                         }
                     </>
 

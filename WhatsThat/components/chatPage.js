@@ -217,16 +217,6 @@ export default class ChatPageScreen extends Component {
                 </ScrollView>
               </View>
 
-                {/* <View style={styles.content}>
-                  <ScrollView>
-                  <View>
-                    <Text>{this.displayChat()}</Text>
-                  </View>
-                </ScrollView>
-              </View> */}
-
-
-
               <View style={styles.footer}>
                 <TextInput
                   style={styles.messageInput}

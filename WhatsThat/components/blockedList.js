@@ -77,7 +77,7 @@ export default class BlockedContactScreen extends Component {
         if (blockedData.length === 0) {
           return (
             <View>
-              <Text style={styles.text}>No Blocked Contacts</Text>
+              <Text style={styles.emptyTitle}>No Blocked Contacts</Text>
             </View>
           )
         }
@@ -86,17 +86,6 @@ export default class BlockedContactScreen extends Component {
             <View style={styles.contactContainer}>
               {blockedData.map((user, id) => {
                 return (
-                  // <View key={id} style={styles.contactDisplay}>
-                  //   <Text style={styles.buttonText}>{user.first_name + " " + user.last_name}</Text>
-                    
-                  //   <TouchableOpacity onPress={() => {this.blockedProfileNavigate(user.user_id);}}>
-                  //     <View style={styles.viewBtn}>
-                  //       <Text style={styles.viewTextBtn}>View Contact</Text>
-                  //     </View>
-                  //   </TouchableOpacity>
-  
-                  // </View>
-
                   <View key={id}>
                   <TouchableOpacity style={styles.contact}>
                     <View style={styles.contactInfo}>

@@ -27,6 +27,13 @@ export default StyleSheet.create({
         fontSize: 45,
         fontWeight: 'bold',
     },
+    emptyTitle: {
+        paddingTop: 130,
+        color: '#20232a',
+        textAlign: 'center',
+        fontSize: 40,
+        justifyContent: 'center'
+    },
     homeLoginBtn: {
         alignItems: 'center',
         justifyContent: 'center',
@@ -242,7 +249,7 @@ export default StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginHorizontal: 'auto',
-        marginBottom: 80
+        marginVertical: 20
     },
     chatNameDisplay: {
         textAlign: 'left',
@@ -445,6 +452,7 @@ export default StyleSheet.create({
         borderWidth: 1, 
         borderRadius: 5,
         paddingLeft: 10,
+        marginRight: 10,
         width: "100%", 
         backgroundColor: '#f5f7f7',
         fontSize: 16
@@ -454,6 +462,54 @@ export default StyleSheet.create({
         color: 'white',
         fontSize: 16,
         paddingVertical: 10
+    },
+    addError: {
+        marginBottom: 20,
+        color: "red",
+        fontWeight: '500',
+        fontSize: 15
+    },
+    addSuccess: {
+        marginBottom: 20,
+        color: "green",
+        fontWeight: '500',
+        fontSize: 15
+    },
+    success: {
+        marginTop: 25,
+        color: "green",
+        fontWeight: '500',
+        fontSize: 15
+    },
+    applyNameBtn: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginHorizontal: 40,
+        padding: 5,
+        backgroundColor: '#15b0b3',
+        borderRadius: 7,
+        marginBottom: 30,
+    },
+    chatInfoContainer: {
+        flex: 1,
+        padding: 24,
+        backgroundColor: '#dcf4f5',
+        // height: 787,
+    },
+    chatContactContainer: {
+        // justifyContent: 'center',
+        // alignItems: 'center',
+        height: 250,
+        marginBottom: 30,
+        // paddin
+    },
+    addIDChatContainer: {
+        flexDirection: 'row',
+        marginVertical: 20,
+        marginLeft: 8,
+        // flexBasis: 'auto',
+        // marginBottom: 0,
+        // marginLeft: 20,
     },
 
 });

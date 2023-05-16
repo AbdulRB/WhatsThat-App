@@ -18,6 +18,7 @@ export default class EditMessageScreen extends Component {
           error: "",
           messageID: "",
           message: "",
+          success: "",
         }
     }
 
@@ -71,7 +72,8 @@ export default class EditMessageScreen extends Component {
 
 
     updateMessage = async () => {
-        this.setState({error: ""})
+        this.setState({error: ""});
+        this.setState({success: ""});
         
         if(this.state.message === ""){
             this.setState({error: "Must enter an updated message"});
@@ -106,7 +108,7 @@ export default class EditMessageScreen extends Component {
         })
         .then(() => {
             console.log("Message updated")
-            this.setState({"error": "Message updated"})
+            this.setState({"success": "Message updated"})
             // this.setState({"submitted": false});
         })
         .catch((error) => {
@@ -163,6 +165,12 @@ export default class EditMessageScreen extends Component {
             <>
                 {this.state.error &&
                     <Text style={styles.error}>{this.state.error}</Text>
+                }
+            </>
+
+            <>
+                {this.state.success &&
+                    <Text style={styles.success}>{this.state.success}</Text>
                 }
             </>
 

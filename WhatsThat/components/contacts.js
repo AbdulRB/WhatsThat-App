@@ -15,6 +15,8 @@ export default class ContactsScreen extends Component {
           addID: "",
           error: "",
           search: "",
+          success: "",
+          searchedContacts: [],
         }
 
         this.getContacts = this.getContacts.bind(this);
@@ -42,9 +44,40 @@ export default class ContactsScreen extends Component {
       this.props.navigation.navigate("Contact Profile");
     }
 
-    getContacts = async () => {
-      // const currentUserId = await AsyncStorage.getItem('@user_id');
+    searchContacts = async () => {
+      if (this.state.search === "") {
+        return
+      }
 
+      return fetch("http://localhost:3333/api/1.0.0/search/" + "?q="+ this.state.search + "&search_in=contacts", {
+          headers: {
+               "X-Authorization": await AsyncStorage.getItem("@session_token")
+          }
+      })
+      .then((response) => {
+          if(response.status === 200){
+            console.log("Contacts searched");
+            return response.json();
+          }
+          else if(response.status === 401){
+            this.props.navigation.navigate("Login");
+          }
+          else{
+            throw 'Something went wrong';
+          }
+        })
+        .then((responseJson) => {
+          this.setState({
+            isLoading: false,
+            searchedContacts: responseJson
+          })
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+    };
+
+    getContacts = async () => {
       return fetch("http://localhost:3333/api/1.0.0/contacts", {
           headers: {
                "X-Authorization": await AsyncStorage.getItem("@session_token")
@@ -79,7 +112,6 @@ export default class ContactsScreen extends Component {
 
       if (!(this.state.addID)) {
           this.setState({ error: "Must enter a User ID" });
-          // console.log(Number.isInteger(this.state.addID));
           return;
       }
 
@@ -99,12 +131,16 @@ export default class ContactsScreen extends Component {
             console.log("Contact added");
             this.getContacts();
             this.displayContacts();
-            console.log(response.json());
+            console.log(response.text());
           }
           else if(response.status === 401){
             this.props.navigation.navigate("Login");
           }
+          else if(response.status === 404){
+            this.setState({error: "User does not exist"});
+          }
           else{
+            this.setState({error: "Cannot add yourself"});
             throw 'Something went wrong';
           }
         })
@@ -125,7 +161,7 @@ export default class ContactsScreen extends Component {
       if (contactData.length === 0) {
         return (
           <View>
-            <Text style={styles.text}>No Contacts Added</Text>
+            <Text style={styles.emptyTitle}>No Contacts Added</Text>
           </View>
         )
       }
@@ -134,18 +170,6 @@ export default class ContactsScreen extends Component {
           <View style={styles.contactContainer}>
             {contactData.map((user, id) => {
               return (
-                // <View key={id} style={styles.contactDisplay}>
-                //   <Text style={styles.buttonText}>{user.first_name + " " + user.last_name}</Text>
-                //   <Text style={styles.buttonText}>{user.email}</Text>
-                  
-                //   <View style={styles.viewBtnContain}>
-                //     <TouchableOpacity onPress={() => {this.contactProfileNavigate(user.user_id);}}>
-                //       <View style={styles.viewBtn}>
-                //         <Text style={styles.viewTextBtn}>View Contact</Text>
-                //       </View>
-                //     </TouchableOpacity>
-                //   </View>
-                // </View>
                 <View key={id}>
                   <TouchableOpacity style={styles.contact}>
                     <View style={styles.contactInfo}>
@@ -164,11 +188,47 @@ export default class ContactsScreen extends Component {
       }
     };
 
-    render(){
+    displaySearchedContacts() {
+      let searchData = this.state.searchedContacts;
 
-      if (!this.state.isLoading){
+      if (searchData.length === 0) {
+        return
+        //   <View>
+        //     <Text style={styles.emptyTitle}>No Contacts Found</Text>
+        //   </View>
+        // )
+
+      }
+      else {
         return (
-          // <ScrollView>
+          <View style={styles.contactContainer}>
+            {searchData.map((user, id) => {
+              return (
+                <View key={id}>
+                  <TouchableOpacity style={styles.contact}>
+                    <View style={styles.contactInfo}>
+                      <Text style={styles.contactName}>{user.given_name + " " + user.family_name}</Text>
+                      <Text style={styles.contactEmail}>{user.email}</Text>
+                    </View>
+                        <TouchableOpacity onPress={() => {this.contactProfileNavigate(user.user_id);}}>
+                          <Icon name="arrow-forward-ios" color="black" />
+                        </TouchableOpacity>
+                  </TouchableOpacity>
+                </View>
+              );
+            })}
+          </View>
+        )
+      }
+    };
+
+    handleSearchText = (text) => {
+      this.setState({"search": text});
+      this.searchContacts();
+    }
+
+    render(){
+        return (
             <View style={styles.container}>
 
               <View style={styles.addIDContainer}>
@@ -190,34 +250,36 @@ export default class ContactsScreen extends Component {
               <View style={styles.searchIDContainer}>
                 <TextInput
                   style={styles.searchIDTextBox}
-                  placeholder="Search by Name, Email, ID..."
-                  onChangeText={search => this.setState({ search })}
+                  placeholder="Search by Name or Email..."
+                  onChangeText={(text) => this.handleSearchText(text)}
                   defaultValue={this.state.search}
                 />
-                <View>
-                  <TouchableOpacity>
-                    <View style={styles.searchIDBtn}>
-                      <Text style={styles.searchIDButtonText}>Search</Text>
-                    </View>
-                  </TouchableOpacity>
-                </View>
               </View>
 
-              {/* <>
+              <>
                 {this.state.error &&
-                  <Text style={styles.error}>{this.state.error}</Text>
+                  <Text style={styles.addError}>{this.state.error}</Text>
                 }
-              </> */}
-              
-              <ScrollView showsVerticalScrollIndicator={false}> 
-                <View>
-                  <Text>{this.displayContacts()}</Text>
-                </View>
-              </ScrollView>
+              </>
 
-            </View>
-          // </ScrollView>        
+              {this.state.search ? (
+              <ScrollView showsVerticalScrollIndicator={false}> 
+              <View>
+                <Text>{this.displaySearchedContacts()}</Text>
+              </View>
+            </ScrollView>
+              ) : ( 
+              <ScrollView showsVerticalScrollIndicator={false}> 
+              <View>
+                <Text>{this.displayContacts()}</Text>
+              </View>
+            </ScrollView>
+              )}
+
+
+              
+
+            </View>      
         )
-      }
     }
 };

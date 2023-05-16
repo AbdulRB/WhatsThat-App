@@ -17,6 +17,9 @@ export default class ChatInfoScreen extends Component {
           chatName: "",
           error: "",
           addMemberID: "",
+          addError: "",
+          success: "",
+          creatorID: "",
         }
     }
 
@@ -66,7 +69,9 @@ export default class ChatInfoScreen extends Component {
 
 
     updateChatName = async () => {
-        this.setState({error: ""})
+      this.setState({ addError: ""});
+      this.setState({ error: ""});
+      this.setState({ success: ""});
         
         if(this.state.chatName === ""){
             this.setState({error: "Must enter a new value for name"});
@@ -101,7 +106,7 @@ export default class ChatInfoScreen extends Component {
         })
         .then(() => {
             console.log("Current chat name updated")
-            this.setState({"error": "Chat name updated"})
+            this.setState({"success": "Chat name updated"})
             // this.setState({"submitted": false});
         })
         .catch((error) => {
@@ -114,6 +119,8 @@ export default class ChatInfoScreen extends Component {
         let chatData = this.state.listData;
         let currentUserID = this.state.currentUserID;
         const myInt = parseInt(currentUserID);
+
+        this.state.creatorID = chatData.creator?.user_id;
 
         if (chatData.creator?.user_id === myInt) {
            return (
@@ -156,19 +163,34 @@ export default class ChatInfoScreen extends Component {
           };  
     }; 
 
+    // checkRemove = (deleteID) => {
+    //   const testInt = parseInt(this.state.creatorID);
+
+    //   console.log(testInt);
+    //   console.log(deleteID);
+
+    //   if (deleteID === testInt) {
+    //     this.removeSelf(deleteID);
+    //   }
+    //   else {
+    //     this.removeMember(deleteID);
+    //   }
+
+    // }
 
     addMember = async () => {
         var hasNumber = /\d/; 
-        this.setState({ error: "" })
+        this.setState({ addError: "" });
+        this.setState({ error: "" });
+        this.setState({ success: "" });
   
         if (!(this.state.addMemberID)) {
-            this.setState({ error: "Must enter a User ID" });
-            console.log(Number.isInteger(this.state.addMemberID))
+            this.setState({ addError: "Must enter a User ID" });
             return;
         }
   
         if(!(hasNumber.test(this.state.addMemberID))) {
-          this.setState({ error: "Must enter a valid User ID" })
+          this.setState({ addError: "Must enter a valid User ID" })
           return;
         }
         
@@ -180,10 +202,14 @@ export default class ChatInfoScreen extends Component {
         })
         .then((response) => {
             if(response.status === 200){
+              this.setState({addError: ""});
               console.log("Member added to chat");
               this.getChatInformation();
               this.displayChatMembers();
             //   console.log(response.json());
+            }
+            else if(response.status === 400 || response.status === 404){
+              this.setState({addError: "Contact already added or does not exist"});
             }
             else if(response.status === 401){
               this.props.navigation.navigate("Login");
@@ -247,8 +273,7 @@ export default class ChatInfoScreen extends Component {
 
     render(){
         return (
-          <View style={styles.container}>
-
+          <View style={styles.chatInfoContainer}>
 
             <View style={styles.email}>
                 <Text style={styles.text}>Chat Name:</Text>
@@ -265,36 +290,48 @@ export default class ChatInfoScreen extends Component {
                 }
             </>
 
+            <>
+                {this.state.success &&
+                    <Text style={styles.success}>{this.state.success}</Text>
+                }
+            </>
+
             <View style={styles.signup}>
                 <TouchableOpacity onPress={this.updateChatName}>
-                    <View style={styles.applyBtn}>
+                    <View style={styles.applyNameBtn}>
                         <Text style={styles.buttonText}>Apply Changes</Text>
                     </View>
                 </TouchableOpacity>
             </View>
 
-
-
             <View>
-                <Text style={styles.text}>Group Participants</Text>
-                    <Text>{this.displayChatMembers()}</Text>
-   
-                
+                <Text style={styles.text}>Group Participants:</Text>
+                <ScrollView showsVerticalScrollIndicator={false}>
+                  <Text style={styles.chatContactContainer}>{this.displayChatMembers()}</Text>
+                </ScrollView>
             </View>   
-              
-              <View style={styles.addContainer}>
+
+              <View style={styles.addIDChatContainer}>
                 <TextInput
-                  style={styles.profileTextBox}
-                  placeholder="ID"
+                  style={styles.addIDTextBox}
+                  placeholder="Enter a User ID..."
                   onChangeText={addMemberID => this.setState({ addMemberID })}
                   defaultValue={this.state.addMemberID}
                 />
-                <TouchableOpacity onPress={this.addMember}>
-                  <View style={styles.addBtn}>
-                    <Text style={styles.buttonText}>Add Member</Text>
-                  </View>
-                </TouchableOpacity>
+                <View>
+                  <TouchableOpacity onPress={this.addMember}>
+                    <View style={styles.addIDBtn}>
+                      <Text style={styles.addIDButtonText}>Add Contact</Text>
+                    </View>
+                  </TouchableOpacity>
+                </View>
               </View>
+
+              <>
+                {this.state.addError &&
+                    <Text style={styles.error}>{this.state.addError}</Text>
+                }
+              </>
 
             <View style={styles.signup}>
                 <TouchableOpacity onPress={() => this.removeSelf(this.state.currentUserID)}>

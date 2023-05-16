@@ -15,13 +15,14 @@ export default class LoginScreen extends Component {
             email: "test@account.com",
             password: "Hello123!",
             error: "",
-            submitted: false
+            submitted: false,
+            success: "",
         }
 
-        this._login = this._login.bind(this)
+        this.login = this.login.bind(this)
     }
 
-    _login = async () => {
+    login = async () => {
         this.setState({ submitted: true })
         this.setState({ error: "" })
 
@@ -61,7 +62,7 @@ export default class LoginScreen extends Component {
                 }
             })
             .then(async (responseJson) => {
-                console.log(responseJson)
+                //console.log(responseJson)
                 try {
                     await AsyncStorage.setItem("@user_id", responseJson.id);
                     await AsyncStorage.setItem("@session_token", responseJson.token);
@@ -85,7 +86,7 @@ export default class LoginScreen extends Component {
 
     }
 
-    _signUpNavigate = () => {
+    signUpNavigate = () => {
         this.props.navigation.navigate("Sign Up")
     }
 
@@ -120,15 +121,21 @@ export default class LoginScreen extends Component {
                         }
                     </>
 
+                    <>
+                        {this.state.success &&
+                            <Text style={styles.success}>{this.state.success}</Text>
+                        }
+                    </>
+
                     <View style={styles.login}>
-                        <TouchableOpacity onPress={this._login}>
+                        <TouchableOpacity onPress={this.login}>
                             <View style={styles.loginBtn}>
                                 <Text style={styles.buttonText}>Login</Text>
                             </View>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.signup}>
-                        <TouchableOpacity onPress={this._signUpNavigate}>
+                        <TouchableOpacity onPress={this.signUpNavigate}>
                             <View style={styles.signUpBtn}>
                                 <Text style={styles.buttonText}>Need an account?</Text>
                             </View>

@@ -17,13 +17,14 @@ export default class SignUpScreen extends Component {
             password: "",
             confirmPassword: "",
             error: "", 
-            submitted: false
+            submitted: false,
+            success: "",
         }
 
-        this._signup = this._signup.bind(this)
+        this.signup = this.signup.bind(this)
     }
 
-    _signup = () => {
+    signup = () => {
         this.setState({submitted: true})
         this.setState({error: ""})
 
@@ -77,10 +78,11 @@ export default class SignUpScreen extends Component {
         .then((response) => {
             if(response.status === 201){
                 this.setState({first_name: "", last_name: "", email: "", password: "", confirmPassword: ""});
+                this.setState({success: "User created successfully"});
                 return response.json()
             }
             else if(response.status === 400){
-                throw "Email already exists or password isn't  strong enough";
+                throw "Email already exists or password isn't strong enough";
             }
             else{
                 throw "Something went wrong";
@@ -88,7 +90,7 @@ export default class SignUpScreen extends Component {
         })
         .then((responseJson) => {
             console.log("User created with ID: ", responseJson)
-            this.setState({"error": "User added successfully"})
+            // this.setState({"error": "User added successfully"})
             this.setState({"submitted": false});
             this.props.navigation.navigate("Login")
         })
@@ -161,9 +163,15 @@ export default class SignUpScreen extends Component {
                             <Text style={styles.error}>{this.state.error}</Text>
                         }
                     </>
+
+                    <>
+                        {this.state.success &&
+                            <Text style={styles.success}>{this.state.success}</Text>
+                        }
+                    </>
             
                     <View style={styles.signup}>
-                        <TouchableOpacity onPress={this._signup}>
+                        <TouchableOpacity onPress={this.signup}>
                             <View style={styles.signUpBtn}>
                                 <Text style={styles.buttonText}>Sign Up</Text>
                             </View>

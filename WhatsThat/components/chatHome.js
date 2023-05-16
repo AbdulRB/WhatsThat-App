@@ -34,7 +34,6 @@ export default class ChatScreen extends Component {
     componentWillUnmount() {
       clearInterval(this.interval);
       this.unsubscribe();
-      
     };
 
     getChats = async () => {
@@ -80,7 +79,7 @@ export default class ChatScreen extends Component {
       if (chatData.length === 0) {
         return (
           <View>
-            <Text style={styles.text}>No Chats Created</Text>
+            <Text style={styles.emptyTitle}>No Chats Created</Text>
           </View>
         )
       }
@@ -89,18 +88,6 @@ export default class ChatScreen extends Component {
           <View >
             {chatData.map((chat, id) => {
               return (
-                // <View key={id} style={styles.chatNameDisplay}>
-                //   <Text style={styles.text}>{chat.name}</Text>
-                //   <Text style={styles.text}>{chat.last_message.message}</Text>
-                  
-                //   <TouchableOpacity onPress={() => {this.chatPageNavigate(chat.chat_id);}}>
-                //     <View style={styles.viewBtn}>
-                //       <Text style={styles.viewTextBtn}>View Chat</Text>
-                //     </View>
-                //   </TouchableOpacity>
-  
-                // </View>
-
                 <View key={id}>
                 <TouchableOpacity style={styles.contact} onPress={() => {this.chatPageNavigate(chat.chat_id);}}>
                   <View style={styles.contactInfo}>

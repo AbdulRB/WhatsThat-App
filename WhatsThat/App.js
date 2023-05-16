@@ -31,7 +31,7 @@ const MainTabNav = () => {
   return (
     <AuthTab.Navigator
       initialRouteName="Chats"
-      screenOptions={{headerShown: false}}>
+      screenOptions={{headerShown: false, unmountOnBlur: true}}>
       <AuthTab.Screen name="Chats" component={ChatScreen} />
       <AuthTab.Screen name="Contacts" component={ContactsScreen} />
       <AuthTab.Screen name="Settings" component={SettingsScreen} />
@@ -48,7 +48,10 @@ export default class App extends Component {
     return (
       <NavigationContainer>
         <AuthStack.Navigator
-          initialRouteName="Tab Nav"
+          initialRouteName="Home"
+          screenOptions={{
+            unmountOnBlur: true,
+          }}
           >
           <AuthStack.Screen name="Home" component={HomeScreen} options={{headerShown: false}} />
           <AuthStack.Screen name="Login" component={LoginScreen} />
