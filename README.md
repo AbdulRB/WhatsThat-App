@@ -2,7 +2,7 @@
 
 ## Description
 
-This is a mobile application which utilizes the react native framework and javascript to allow users to control home appliances remotely. The app makes use of Bluetooth and a server connection to provide users with two different means of connecting to devices. The project also contains a hardware module consisting of a Raspberry Pi and relay modules. When used together, any regular device can be made smart by wiring it to the relays attatched to the Pi. The intended use of this project is for users to add functionality to exisiting hardware by being able to control from their phone.
+This is a mobile application which utilizes the react native framework and javascript. WhatsThat allows users to communicate with each other. Users sign up for an account with WhatsThat and can then search for and add contacts and create chats with individuals or groups of contacts. The application makes use of a custom built API with 23 end-points, connecting to a existing back end server using HTTP Fetch requests.
 
 ## Authors
 
