@@ -1,4 +1,10 @@
-# WhatsThat-App
-A Git repository for my WhatsThat app as part of the Mobile Applications Development module in my final year.
+# WhatsThat Mobile Application
 
-![image](https://github.com/AbdulRB/WhatsThat-App/assets/94483762/f9cdb267-f71d-4b89-a098-ee42dc206911)
+## Description
+
+This is a mobile application which utilizes the react native framework and javascript to allow users to control home appliances remotely. The app makes use of Bluetooth and a server connection to provide users with two different means of connecting to devices. The project also contains a hardware module consisting of a Raspberry Pi and relay modules. When used together, any regular device can be made smart by wiring it to the relays attatched to the Pi. The intended use of this project is for users to add functionality to exisiting hardware by being able to control from their phone.
+
+## Authors
+
+Abdul Rehman Babar 
+
